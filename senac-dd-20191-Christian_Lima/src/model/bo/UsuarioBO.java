@@ -36,7 +36,8 @@ public class UsuarioBO {
 		
 		if (mensagem.isEmpty()) {
 			UsuarioDAO usuario = new UsuarioDAO();
-			mensagem = usuario.cadastrar(userVO);
+			usuario.cadastrar(userVO);
+			mensagem = "Usuario Cadastrado com Sucesso!";
 		}
 		
 		return mensagem;
@@ -52,9 +53,9 @@ public class UsuarioBO {
 		if(usuarioLogado == null) {
 			mensagem = "Usuário não encontrado";
 		}else if(usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR){
-			int codigoRetornoExclusao = userDAO.excluir(usuarioParaExcluir);
+			boolean codigoRetornoExclusao = userDAO.excluir(usuarioParaExcluir);
 			
-			if(codigoRetornoExclusao == 0) {
+			if(codigoRetornoExclusao == false) {
 				mensagem = "Usuário não foi excluído";
 			}else {
 				mensagem = "Usuário excluído com sucesso";
