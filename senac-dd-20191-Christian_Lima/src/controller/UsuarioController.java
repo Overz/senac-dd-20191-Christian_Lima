@@ -39,7 +39,7 @@ public class UsuarioController {
 			UsuarioVO user = new UsuarioVO(nome, email, senha, senhaConfirmacao, nivel);
 
 			UsuarioBO bo = new UsuarioBO();
-			mensagem = bo.salvar(user);
+			mensagem = bo.validarSalvar(user);
 		}
 
 		return mensagem;

@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -108,4 +109,5 @@ public static void closeResultSet(ResultSet result){
 		System.out.println("Problema no fechamento do ResultSet");
 		}
 	}
+
 }

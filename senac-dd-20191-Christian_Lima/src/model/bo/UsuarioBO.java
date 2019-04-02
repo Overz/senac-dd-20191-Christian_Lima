@@ -12,7 +12,7 @@ public class UsuarioBO {
 	 * @param user;
 	 * @return mensagem, verificando regras de negocio, senha,email,nivel, se tudo estiver OK, cria o UsuarioDAO;
 	 */
-	public String salvar(UsuarioVO userVO) {
+	public String validarSalvar(UsuarioVO userVO) {
 		String mensagem = "";
 
 		String[] conferirEmail = new String [2];
@@ -43,12 +43,12 @@ public class UsuarioBO {
 		return mensagem;
 	}
 	
-	public String excluir(UsuarioVO usuarioParaExcluir, String login, String senha) {
+	public String excluir(UsuarioVO usuarioParaExcluir, String email, String senha) {
 		String mensagem = "";
 		
 		UsuarioDAO userDAO = new UsuarioDAO();
 		
-		UsuarioVO usuarioLogado = userDAO.consultarPorLoginESenha(login, senha);
+		UsuarioVO usuarioLogado = userDAO.consultarPorLoginESenha(email, senha);
 		
 		if(usuarioLogado == null) {
 			mensagem = "Usuário não encontrado";
