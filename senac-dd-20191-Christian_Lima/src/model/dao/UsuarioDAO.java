@@ -33,6 +33,7 @@ public class UsuarioDAO {
 					+ "Cadastra existência de Usuario. Erro:" + e.getMessage());
 			result = false;
 		} finally {
+			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
@@ -113,7 +114,7 @@ public class UsuarioDAO {
 		return null;
 	}*/
 	
-	public boolean getCadastrar(UsuarioVO userVO) {
+	/*public boolean getCadastrar(UsuarioVO userVO) {
 		String query = "INSERT INTO USUARIO (nome, email, senha, senhaConfirmacao, nivel)"
 				+ "FROM USUARIO";
 		
@@ -143,7 +144,7 @@ public class UsuarioDAO {
 		
 		return false;
 		
-	}
+	}*/
 	
 	
 	

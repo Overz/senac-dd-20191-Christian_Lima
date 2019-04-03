@@ -36,12 +36,39 @@ public class UsuarioController {
 		}
 
 		if(mensagem.isEmpty()) {
-			UsuarioVO user = new UsuarioVO(nome, email, senha, senhaConfirmacao, nivel);
+			UsuarioVO userVO = new UsuarioVO(nome, email, senha, senhaConfirmacao, nivel);
 
 			UsuarioBO bo = new UsuarioBO();
-			mensagem = bo.validarSalvar(user);
+			mensagem = bo.validarSalvar(userVO);
 		}
 
+		return mensagem;
+	}
+	
+	public String excluir ( String email, String senha, int id) {
+		UsuarioVO userVO = new UsuarioVO();
+		String mensagem = "";
+		
+		if (email == null || email.isEmpty()) {
+			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
+		}
+		
+		if (id <= 0) {
+			mensagem = "Por favor, Digite um ID Valido!"; 
+		}
+		
+		if (userVO.getNivel() == null || userVO.getNivel().getId() == 0) {
+			mensagem = "Por favor, Escolha o Nivel a ser de Usuario que deseja Excluir!";
+		}
+		
+		if (mensagem == null || mensagem.isEmpty()) {
+			
+			UsuarioBO userBO = new UsuarioBO();
+			mensagem = userBO.excluir(userVO, email, senha, id);
+			
+			//passar para o B.O com validações
+		}
+		
 		return mensagem;
 	}
 }

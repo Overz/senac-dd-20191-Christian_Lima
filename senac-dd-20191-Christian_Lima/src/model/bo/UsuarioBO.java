@@ -22,7 +22,7 @@ public class UsuarioBO {
 			mensagem = "Nome deve ser maior que 3 e menor que 18 Caracteres!";
 		}
 		
-		if (userVO.getSenha().length() <= 6 || userVO.getSenha().length() >= 12) {
+		if (userVO.getSenha().length() < 5 || userVO.getSenha().length() > 13) {
 			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
 		}
 		
@@ -43,7 +43,7 @@ public class UsuarioBO {
 		return mensagem;
 	}
 	
-	public String excluir(UsuarioVO usuarioParaExcluir, String email, String senha) {
+	public String excluir(UsuarioVO userVO, String email, String senha, int id) {
 		String mensagem = "";
 		
 		UsuarioDAO userDAO = new UsuarioDAO();
@@ -53,9 +53,9 @@ public class UsuarioBO {
 		if(usuarioLogado == null) {
 			mensagem = "Usuário não encontrado";
 		}else if(usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR){
-			boolean codigoRetornoExclusao = userDAO.excluir(usuarioParaExcluir);
+			boolean retornoExclusaoDAO = userDAO.excluir(userVO);
 			
-			if(codigoRetornoExclusao == false) {
+			if(retornoExclusaoDAO == false) {
 				mensagem = "Usuário não foi excluído";
 			}else {
 				mensagem = "Usuário excluído com sucesso";
