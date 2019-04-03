@@ -43,12 +43,19 @@ public class UsuarioBO {
 		return mensagem;
 	}
 	
-	public String excluir(UsuarioVO userVO, String email, String senha, int id) {
+	/**
+	 * Exclui um usuário, caso quem chamou o método tenha permissão de administrador
+	 * @param userVO o usuário a ser excluído
+	 * @param email o email de quem chamou o método
+	 * @param senha a senha de quem chamou o método
+	 * @return
+	 */
+	public String excluir(UsuarioVO userVO, String email, String senha) {
 		String mensagem = "";
 		
 		UsuarioDAO userDAO = new UsuarioDAO();
 		
-		UsuarioVO usuarioLogado = userDAO.consultarPorLoginESenha(email, senha);
+		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(email, senha);
 		
 		if(usuarioLogado == null) {
 			mensagem = "Usuário não encontrado";
@@ -62,6 +69,20 @@ public class UsuarioBO {
 			}
 		}
 		
+		return mensagem;
+	}
+
+	public String listagem(String nome, String email) {
+		String mensagem = "";
+		
+		UsuarioDAO userDAO = new UsuarioDAO();
+		
+		UsuarioVO userVO = (UsuarioVO) userDAO.consultarTodos(nome, email);
+		
+		if (userVO ==  null) {
+			mensagem = "Usuarios nao encontrado!";
+		}
+
 		return mensagem;
 	}
 }

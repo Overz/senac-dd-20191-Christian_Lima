@@ -5,16 +5,14 @@ public class UsuarioVO {
 	private String email;
 	private String nome;
 	private String senha;
-	private String senhaConfirmacao;
 	private NivelVO nivelVO;
 	
 	
-	public UsuarioVO(String nome, String email, String senha, String senhaConfirmacao, NivelVO nivelVO) {
+	public UsuarioVO(String nome, String email, String senha, NivelVO nivelVO) {
 		super();
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.senhaConfirmacao = senhaConfirmacao;
 		this.nivelVO = nivelVO;
 	}
 	
@@ -51,15 +49,6 @@ public class UsuarioVO {
 		this.senha = senha;
 	}
 
-
-	public String getSenhaConfirmacao() {
-		return senhaConfirmacao;
-	}
-
-	public void setSenhaConfirmacao(String senhaConfirmacao) {
-		this.senhaConfirmacao = senhaConfirmacao;
-	}
-
 	public NivelVO getNivel() {
 		return nivelVO;
 	}
@@ -76,7 +65,6 @@ public class UsuarioVO {
 				+ "\nEmail:" + this.getEmail() 
 				+ "\nNome:" + this.getNome() 
 				+ "\nSenha:" + this.getSenha()
-				+ "\nConfirmação de Senha: " + this.getSenhaConfirmacao()
 				+  this.getNivel().toString();
 	}
 

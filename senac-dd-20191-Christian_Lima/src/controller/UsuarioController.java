@@ -8,9 +8,11 @@ public class UsuarioController {
 
 	//A camada de controle deve validar o preenchimento dos campos, ou seja, 
 	//só pode chamar um BO caso TODOS os dados estejam preenchidos na tela (não-vazios e não-nulos).
+	
+	
+	// VALIDAÇÃO PARA SALVAR NO BANCO
 	public String salvar(String nome, String email, String senha,  String senhaConfirmacao, NivelVO nivel) {
 		String mensagem = "";
-		//NivelVO nivelVO = new NivelVO();
 
 		if (nome == null || nome.trim().isEmpty()) {
 			mensagem = "Por Favor, preencha Nome!";	
@@ -36,7 +38,7 @@ public class UsuarioController {
 		}
 
 		if(mensagem.isEmpty()) {
-			UsuarioVO userVO = new UsuarioVO(nome, email, senha, senhaConfirmacao, nivel);
+			UsuarioVO userVO = new UsuarioVO(nome, email, senha, nivel);
 
 			UsuarioBO bo = new UsuarioBO();
 			mensagem = bo.validarSalvar(userVO);
@@ -45,16 +47,38 @@ public class UsuarioController {
 		return mensagem;
 	}
 	
-	public String excluir ( String email, String senha, int id) {
+	
+	// VALIDAR A LISTAGEM
+	public String listar (String email, int id) {
+		String mensagem = "";
+		
+		if (email == null || email.isEmpty()) {
+			mensagem = "Por favor, Digite o Email!";
+		}
+		
+		if (id <= 0) {
+			mensagem = "Por favor, Digite um ID valido!";
+		}
+		
+		if (mensagem == null || mensagem.isEmpty()) {
+			
+			UsuarioBO userBO = new UsuarioBO();
+			mensagem = userBO.listagem(email,id);
+			
+		}
+		
+		
+		
+		return mensagem;
+	}
+	
+	// VALIDAÇÃO PARA EXCLUSAO DO BANCO
+	public String excluir (String email, String senha) {
 		UsuarioVO userVO = new UsuarioVO();
 		String mensagem = "";
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
-		}
-		
-		if (id <= 0) {
-			mensagem = "Por favor, Digite um ID Valido!"; 
 		}
 		
 		if (userVO.getNivel() == null || userVO.getNivel().getId() == 0) {
@@ -64,7 +88,7 @@ public class UsuarioController {
 		if (mensagem == null || mensagem.isEmpty()) {
 			
 			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.excluir(userVO, email, senha, id);
+			mensagem = userBO.excluir(userVO, email, senha);
 			
 			//passar para o B.O com validações
 		}
