@@ -49,21 +49,17 @@ public class UsuarioController {
 	
 	
 	// VALIDAR A LISTAGEM
-	public String listar (String email, int id) {
+	public String listar (String nome, String email) {
 		String mensagem = "";
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o Email!";
 		}
 		
-		if (id <= 0) {
-			mensagem = "Por favor, Digite um ID valido!";
-		}
-		
 		if (mensagem == null || mensagem.isEmpty()) {
 			
 			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.listagem(email,id);
+			mensagem = userBO.listagem(nome, email);
 			
 		}
 		
@@ -79,10 +75,6 @@ public class UsuarioController {
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
-		}
-		
-		if (userVO.getNivel() == null || userVO.getNivel().getId() == 0) {
-			mensagem = "Por favor, Escolha o Nivel a ser de Usuario que deseja Excluir!";
 		}
 		
 		if (mensagem == null || mensagem.isEmpty()) {

@@ -138,7 +138,6 @@ public class CadastroUsuarioGUI {
 		JButton button = new JButton("Salvar");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
 				//1 - Ler os valores digitados nos campos da tela
 				String nome = txtNome.getText();
 				String email = txtEmail.getText();
