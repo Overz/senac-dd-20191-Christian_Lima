@@ -15,22 +15,22 @@ public class UsuarioController {
 		String mensagem = "";
 
 		if (nome == null || nome.trim().isEmpty()) {
-			mensagem = "Por Favor, preencha Nome!";	
+			mensagem = "Por Favor, digite o Nome!";	
 		}
 
 		if (email == null || email.trim().isEmpty()) {
-			mensagem = "Por favor, preencha o Email!";
+			mensagem = "Por favor, digite o Email!";
 		}
 
 		if (senha == null || senha.trim().isEmpty()) {
-			mensagem = "Por favor, preencha a Senha!";
+			mensagem = "Por favor, digite a Senha!";
 		}
 
 		if (senhaConfirmacao == null || senhaConfirmacao.trim().isEmpty()) {
 			if (!senha.equals(senhaConfirmacao)) {
 				mensagem = "Senha e Confirmação de Senha são diferentes, por favor, digite iguais!";
 			}
-			mensagem = "Por favor, preencha a Senha!";
+			mensagem = "Por favor, digite a Senha!";
 		}
 
 		if (nivel == null) {
@@ -41,7 +41,7 @@ public class UsuarioController {
 			UsuarioVO userVO = new UsuarioVO(nome, email, senha, nivel);
 
 			UsuarioBO bo = new UsuarioBO();
-			mensagem = bo.validarSalvar(userVO);
+			mensagem = bo.validarCadastro(userVO);
 		}
 
 		return mensagem;
@@ -51,6 +51,10 @@ public class UsuarioController {
 	// VALIDAR A LISTAGEM
 	public String listar (String nome, String email) {
 		String mensagem = "";
+		
+		if (nome == null || nome.isEmpty()) {
+			mensagem = "Por favor, Digite o Nome!";
+		}
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o Email!";
@@ -69,9 +73,47 @@ public class UsuarioController {
 	}
 	
 	// VALIDAÇÃO PARA EXCLUSAO DO BANCO
-	public String excluir (String email, String senha) {
-		UsuarioVO userVO = new UsuarioVO();
+	public String consultarPermissao (String nome, String email, String senha, String senhaConfirmacao, NivelVO nivelSelecionado) {
+		UsuarioVO userVO = new UsuarioVO(nome, email, senha, nivelSelecionado);
 		String mensagem = "";
+		
+		if (nome == null || nome.isEmpty()) {
+			mensagem = "Por favor, Digite o Nome!";
+		}
+		
+		if (email == null || email.isEmpty()) {
+			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
+		}
+		
+		if (senha == null || senha.isEmpty()) {
+			mensagem = "Por favor, Digite a Senha!";
+			if (senhaConfirmacao == null || senhaConfirmacao.trim().isEmpty()) {
+				if (!senha.equals(senhaConfirmacao)) {
+					mensagem = "Senha e Confirmação de Senha são diferentes, por favor, digite Senhas iguais!";
+				}
+			}
+		}
+		
+		if (nivelSelecionado == null) {
+			mensagem = "Por favor, Escolha o Nivel!";
+		}
+		
+		if (mensagem == null || mensagem.isEmpty()) {
+			
+			UsuarioBO userBO = new UsuarioBO();
+			mensagem = userBO.verificarPermissao(userVO, nome, email, senha);
+			
+		}
+		
+		return mensagem;
+	}
+	
+	public String excluir(String nome, String email) {
+		String mensagem = "";
+		
+		if (nome == null || nome.isEmpty()) {
+			mensagem = "Por favor, Digite o Nome!";
+		}
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
@@ -79,10 +121,9 @@ public class UsuarioController {
 		
 		if (mensagem == null || mensagem.isEmpty()) {
 			
+			UsuarioVO userVO = new UsuarioVO();
 			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.excluir(userVO, email, senha);
-			
-			//passar para o B.O com validações
+			userBO.excluir(userVO);
 		}
 		
 		return mensagem;

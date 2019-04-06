@@ -18,7 +18,7 @@ public class NivelDAO {
 		// TODO Auto-generated method stub
 		//SELECT * FROM NIVEL WHERE ID = idNivel
 
-		String query = "SELECT * FROM NIVEL WHERE id = " + idNivel;
+		String query = "SELECT id FROM NIVEL WHERE id = " + idNivel;
 		
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
@@ -33,9 +33,10 @@ public class NivelDAO {
 				nivelVO.setDescricao(resultado.getString("descricao"));
 				
 			}
-		
+		return nivelVO;
 		} catch (SQLException e) {
 			System.out.println("Erro ao obter resultados da tabela Usuario junto a Nivel. Erro: " + e.getMessage());
+			System.out.println(query);
 		} finally {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);

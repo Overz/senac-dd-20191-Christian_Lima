@@ -15,17 +15,17 @@ public class UsuarioDAO {
 
 	/**
 	 * Cadastra um novo usuário
-	 * @param usuario
+	 * @param userVO
 	 * @return true caso cadastrou, false caso contrário
 	 */
-	public boolean cadastrar(UsuarioVO usuario) {
+	public boolean cadastrar(UsuarioVO userVO) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		boolean result = false;
 
 		String query = "INSERT INTO USUARIO (nome, email, senha, idNivel)"
-				+ "VALUES ('" + usuario.getNome() +"','" + usuario.getEmail()
-				+ "' ,'" + usuario.getSenha() + "', '" + usuario.getNivel().getId() + "')";
+				+ "VALUES ('" + userVO.getNome() +"','" + userVO.getEmail()
+				+ "' ,'" + userVO.getSenha() + "', '" + userVO.getNivel().getId() + "')";
 
 		try {
 			int resultado = stmt.executeUpdate(query);
@@ -53,8 +53,8 @@ public class UsuarioDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 
-		String query = "DELETE (nome, email, senha, senhaConfirmacao, nivel) FROM USUARIO"
-				+ " WHERE id = " + userVO.getNivel().getId();
+		String query = "DELETE (nome, email, senha, idNivel) FROM USUARIO"
+				+ " WHERE id = '" + userVO.getNivel().getId() + "' ";
 		try {
 			stmt.executeQuery(query);
 			return true;
@@ -69,21 +69,24 @@ public class UsuarioDAO {
 	}
 
 	/**
-	 * Obtém um usuário dado email e senha
+	 * Obtém um usuário dado nome, email e senha
+	 * @param nome
 	 * @param email
 	 * @param senha
 	 * @return um usuário, caso email e senha estejam corretos
 	 */
-	public UsuarioVO consultarPorEmailESenha(String email, String senha) {
+	public UsuarioVO consultarPorEmailESenha(String nome, String email, String senha) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		UsuarioVO user = null;
-
-		String query = "SELECT * FROM USUARIO "
-				+ " WHERE email = " + email 
-				+ " AND senha = " + senha; 
-
+		
+		
+		String query = "SELECT * FROM USUARIO"
+				+ " WHERE UPPER(nome) = '" + nome.toUpperCase() + "' "
+				+ " AND UPPER(email) = '" + email.toUpperCase() + "' "
+				+ " AND UPPER(senha) = '" + senha.toUpperCase() + "' ";
+		
 		try {
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
@@ -94,30 +97,21 @@ public class UsuarioDAO {
 				user.setSenha(resultado.getString("senha"));
 
 				int idNivel = resultado.getInt("idNivel");
-
-				NivelDAO nivelDAO = new NivelDAO();
-				//TODO implementar o NivelDAO!
+				
+				NivelDAO nivelDAO =  new NivelDAO();
 				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
 				user.setNivel(nivel);
+				return user;
 			}
 		} catch (SQLException e) {
-			System.out.println("Falha ao Selecionar os Usuarios. Erro: "+ e.getMessage());
+			System.out.println("Falha ao Selecionar os Usuarios.\nErro: "+  e.getMessage());
+			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
 		}
 		return user;
-	}
-
-	public UsuarioVO consultar(String email, int id) {
-		Connection conn = Banco.getConnection();
-		Statement stmt = Banco.getStatement(conn);
-		ResultSet resultado = null;
-
-		//TODO implementar 
-		
-		return null;
 	}
 
 	// NECESSITA ALTERAÇÃO, VERIFICAR NOME/EMAIL PARA RETORNAREM CORRETOS;
