@@ -1,5 +1,7 @@
 CREATE SCHEMA `meubanco` ;
 
+ALTER SCHEMA `meubanco`  DEFAULT CHARACTER SET utf8 ;
+
 CREATE TABLE `meubanco`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(200) NULL,

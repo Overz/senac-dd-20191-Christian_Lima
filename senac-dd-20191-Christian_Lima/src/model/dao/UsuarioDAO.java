@@ -75,7 +75,7 @@ public class UsuarioDAO {
 	 * @param senha
 	 * @return um usuário, caso email e senha estejam corretos
 	 */
-	public UsuarioVO consultarPorEmailESenha(String nome, String email, String senha) {
+	public UsuarioVO consultarPorEmailESenha(String email, String senha) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
@@ -83,8 +83,7 @@ public class UsuarioDAO {
 		
 		
 		String query = "SELECT * FROM USUARIO"
-				+ " WHERE UPPER(nome) = '" + nome.toUpperCase() + "' "
-				+ " AND UPPER(email) = '" + email.toUpperCase() + "' "
+				+ " WHERE UPPER(email) = '" + email.toUpperCase() + "' "
 				+ " AND UPPER(senha) = '" + senha.toUpperCase() + "' ";
 		
 		try {

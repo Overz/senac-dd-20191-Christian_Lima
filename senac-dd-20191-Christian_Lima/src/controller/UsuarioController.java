@@ -47,39 +47,10 @@ public class UsuarioController {
 		return mensagem;
 	}
 	
-	
-	// VALIDAR A LISTAGEM
-	public String listar (String nome, String email) {
+	// VERIFICAÇÂO DE PERMISSÃO
+	public String consultarPermissao (String email, String senha, String senhaConfirmacao, NivelVO nivelSelecionado) {
+		UsuarioVO userVO = new UsuarioVO(null, email, senha, nivelSelecionado);
 		String mensagem = "";
-		
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome!";
-		}
-		
-		if (email == null || email.isEmpty()) {
-			mensagem = "Por favor, Digite o Email!";
-		}
-		
-		if (mensagem == null || mensagem.isEmpty()) {
-			
-			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.listagem(nome, email);
-			
-		}
-		
-		
-		
-		return mensagem;
-	}
-	
-	// VALIDAÇÃO PARA EXCLUSAO DO BANCO
-	public String consultarPermissao (String nome, String email, String senha, String senhaConfirmacao, NivelVO nivelSelecionado) {
-		UsuarioVO userVO = new UsuarioVO(nome, email, senha, nivelSelecionado);
-		String mensagem = "";
-		
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome!";
-		}
 		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
@@ -99,20 +70,19 @@ public class UsuarioController {
 		}
 		
 		if (mensagem == null || mensagem.isEmpty()) {
-			
 			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.verificarPermissao(userVO, nome, email, senha);
-			
+			mensagem = userBO.verificarPermissao(userVO, email, senha);
 		}
-		
+
 		return mensagem;
 	}
 	
+	// VVERIFICAÇÂO PARA EXCLUSAO DO BANCO
 	public String excluir(String nome, String email) {
 		String mensagem = "";
 		
 		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome!";
+			mensagem = "Por favor, Digite o Nome do usuario a ser excluido!!";
 		}
 		
 		if (email == null || email.isEmpty()) {
@@ -120,7 +90,6 @@ public class UsuarioController {
 		}
 		
 		if (mensagem == null || mensagem.isEmpty()) {
-			
 			UsuarioVO userVO = new UsuarioVO();
 			UsuarioBO userBO = new UsuarioBO();
 			userBO.excluir(userVO);
@@ -128,4 +97,43 @@ public class UsuarioController {
 		
 		return mensagem;
 	}
+
+	public String consultarPorNome(String nome) {
+		String mensagem = "";
+		
+			if (nome == null || nome.isEmpty()) {
+				mensagem = "Por favor, Digite o Nome!";
+			}
+			
+			if (mensagem == null || mensagem.isEmpty()) {
+				
+				UsuarioBO userBO = new UsuarioBO();
+				userBO.consultarPorNome(nome);
+				
+			}
+		
+		return mensagem;
+	}
+	
+	// VALIDAR A LISTAGEM
+		public String listar (String nome, String email) {
+			String mensagem = "";
+			
+			if (nome == null || nome.isEmpty()) {
+				mensagem = "Por favor, Digite o Nome!";
+			}
+			
+			if (email == null || email.isEmpty()) {
+				mensagem = "Por favor, Digite o Email!";
+			}
+			
+			if (mensagem == null || mensagem.isEmpty()) {
+				
+				UsuarioBO userBO = new UsuarioBO();
+				mensagem = userBO.listarTodos(nome, email);
+				
+			}
+			
+			return mensagem;
+		}
 }

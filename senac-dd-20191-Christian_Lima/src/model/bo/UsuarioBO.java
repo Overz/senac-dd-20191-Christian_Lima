@@ -22,7 +22,7 @@ public class UsuarioBO {
 			mensagem = "Nome deve ser maior que 3 e menor que 18 Caracteres!";
 		}
 
-		if (userVO.getSenha().length() < 5 || userVO.getSenha().length() > 13) {
+		if (userVO.getSenha().length() <= 6 || userVO.getSenha().length() >= 12) {
 			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
 		}
 
@@ -50,11 +50,23 @@ public class UsuarioBO {
 	 * @param senha a senha de quem chamou o método
 	 * @return
 	 */
-	public String verificarPermissao(UsuarioVO userVO, String nome, String email, String senha) {
+	@SuppressWarnings("unused")
+	public String verificarPermissao(UsuarioVO userVO, String email, String senha) {
 		String mensagem = "";
 
+		String[] conferirEmail = new String [2];
+		conferirEmail = userVO.getEmail().split("@");
+		if (conferirEmail.length > 2) {
+			mensagem = "Email Invalido!";
+		}
+		
+		if (senha.length() <= 6 || senha.length() >= 12) {
+			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
+		}
+
+		
 		UsuarioDAO userDAO = new UsuarioDAO();
-		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(nome, email, senha);
+		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(email, senha);
 	
 		System.out.println(usuarioLogado.toString());
 		
@@ -68,10 +80,10 @@ public class UsuarioBO {
 
 		return mensagem;
 	}
-
-
+	//Método complementar
 	public String excluir (UsuarioVO userVO) {
 		String mensagem = "";
+		@SuppressWarnings("unused")
 		boolean retornoExclusaoDAO;
 
 		UsuarioDAO userDAO = new UsuarioDAO();
@@ -88,7 +100,7 @@ public class UsuarioBO {
 	}
 	
 	
-	public String listagem(String nome, String email) {
+	public String listarTodos(String nome, String email) {
 		String mensagem = "";
 		
 		UsuarioDAO userDAO = new UsuarioDAO();
@@ -100,6 +112,17 @@ public class UsuarioBO {
 		} else if (userVO != null) {
 			mensagem = "Usuarios encontrados!";
 		}
+		
+		return mensagem;
+	}
+
+	public String consultarPorNome(String nome) {
+		String mensagem = "";
+		
+		if (nome.length() <= 3 || nome.length() >= 18) {
+			mensagem = "Nome deve ser maior que 3 e menor que 18 Caracteres!";
+		}
+		
 		
 		return mensagem;
 	}
