@@ -1,5 +1,7 @@
 package model.bo;
 
+import java.util.ArrayList;
+
 import model.dao.UsuarioDAO;
 import model.vo.UsuarioVO;
 
@@ -59,17 +61,14 @@ public class UsuarioBO {
 		if (conferirEmail.length > 2) {
 			mensagem = "Email Invalido!";
 		}
-		
+
 		if (senha.length() <= 6 || senha.length() >= 12) {
 			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
 		}
 
-		
 		UsuarioDAO userDAO = new UsuarioDAO();
 		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(email, senha);
-	
-		System.out.println(usuarioLogado.toString());
-		
+
 		if (usuarioLogado == null) {
 			mensagem = "Login Invalido, por favor, tente novamente!";
 			if (usuarioLogado != null && usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR) {
@@ -83,47 +82,53 @@ public class UsuarioBO {
 	//Método complementar
 	public String excluir (UsuarioVO userVO) {
 		String mensagem = "";
-		@SuppressWarnings("unused")
-		boolean retornoExclusaoDAO;
 
 		UsuarioDAO userDAO = new UsuarioDAO();
 
 		if (userDAO.excluir(userVO) == true) {
-			retornoExclusaoDAO = userDAO.excluir(userVO);
 			mensagem = "Usuario Excluido com Sucesso!";
-
-		} if (userDAO.excluir(userVO) == false) {
+		} else {
 			mensagem = "Erro ao Excluir o Usuario!";
 		}
 
 		return mensagem;
 	}
-	
-	
-	public String listarTodos(String nome, String email) {
-		String mensagem = "";
-		
-		UsuarioDAO userDAO = new UsuarioDAO();
-		
-		UsuarioVO userVO = (UsuarioVO) userDAO.consultarTodos(nome, email);
-		
-		if (userVO ==  null) {
-			mensagem = "Usuarios nao encontrado!";
-		} else if (userVO != null) {
-			mensagem = "Usuarios encontrados!";
-		}
-		
-		return mensagem;
-	}
 
-	public String consultarPorNome(String nome) {
-		String mensagem = "";
+	/**
+	 * Método que manda para o DAO a consulta por nome.
+	 * @param nome
+	 * @return
+	 */
+	public UsuarioVO consultarPorNomeBO(String nome) {
+		UsuarioVO userVO = null;
+		UsuarioDAO userDAO = new UsuarioDAO();
+
+		verificarNomeCorretoBO(nome);
+		 userVO = userDAO.consultarPorNomeDAO(nome);
 		
+		return userVO ;
+	}
+	
+	/**
+	 * Método Auxiliar de 'ConsultarPorNomeBO', verificando regras de negocio
+	 * @param nome
+	 * @return mensagem
+	 */
+	private String verificarNomeCorretoBO(String nome) {
+		String mensagem = "";
+
+		if (nome == null || nome.isEmpty()) {
+			mensagem = "Por favor, Digite o Nome!";
+		}
 		if (nome.length() <= 3 || nome.length() >= 18) {
 			mensagem = "Nome deve ser maior que 3 e menor que 18 Caracteres!";
 		}
-		
-		
 		return mensagem;
+
+	}
+
+	public ArrayList<UsuarioVO> consultarTodos() {
+		UsuarioDAO userDAO = new UsuarioDAO();
+		return userDAO.consultarTodos();
 	}
 }

@@ -70,7 +70,6 @@ public class UsuarioDAO {
 
 	/**
 	 * Obtém um usuário dado nome, email e senha
-	 * @param nome
 	 * @param email
 	 * @param senha
 	 * @return um usuário, caso email e senha estejam corretos
@@ -91,7 +90,6 @@ public class UsuarioDAO {
 			if (resultado.next()) {
 				user = new UsuarioVO();
 				//Constrói um usuário com os dados retornados pela consulta
-				user.setNome(resultado.getString("nome"));
 				user.setEmail(resultado.getString("email"));
 				user.setSenha(resultado.getString("senha"));
 
@@ -113,33 +111,36 @@ public class UsuarioDAO {
 		return user;
 	}
 
-	// NECESSITA ALTERAÇÃO, VERIFICAR NOME/EMAIL PARA RETORNAREM CORRETOS;
-	public List<UsuarioVO> consultarTodos(String nome, String email){
+	@SuppressWarnings("unchecked")
+	public ArrayList<UsuarioVO> consultarTodos() {
 		String query = "SELECT * FROM USUARIOS";
 
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		UsuarioVO userVO = null;
 		try {
 			resultado = stmt.executeQuery(query);
-			List<UsuarioVO> listagem = new ArrayList<UsuarioVO>();
+			ArrayList<UsuarioVO> listagem = new ArrayList<UsuarioVO>();
 
 			while (resultado.next()) {
-				UsuarioVO userVO = new UsuarioVO();
+				userVO = new UsuarioVO();
 				userVO.setNome(resultado.getString("nome"));
 				userVO.setNome(resultado.getString("email"));
 				userVO.setNome(resultado.getString("senha"));
 				int idNivel = resultado.getInt("idNivel");
 
 				NivelDAO nivelDAO = new NivelDAO();
-				//TODO implementar o NivelDAO!
 				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
 				userVO.setNivel(nivel);
+				
+				listagem.add(userVO);
 			}
 
 			return listagem; 
 		} catch (SQLException e) {
 			System.out.println("Erro ao Listar os Usuarios. Erro: " + e.getMessage());
+			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(stmt);
@@ -147,5 +148,33 @@ public class UsuarioDAO {
 		}
 
 		return null;
+	}
+
+	public UsuarioVO consultarPorNomeDAO(String nome) {
+		String query = "SELECT UPPER(nome) FROM USUARIO WHERE nome LIKE '" + nome + "'";
+		UsuarioVO userVO = new UsuarioVO();
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				userVO.setNivel(resultado.getInt("id"));
+				userVO.setNome(resultado.getString("nome"));
+				userVO.setEmail(resultado.getString("email"));
+				//userVO.setNivel((NivelVO) resultado.getClob(4));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar por nome no banco.\nErro: " + e.getMessage());
+			System.out.println(query);
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return userVO;
 	}
 }

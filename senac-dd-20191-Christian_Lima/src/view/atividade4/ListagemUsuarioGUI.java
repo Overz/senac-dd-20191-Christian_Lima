@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import controller.UsuarioController;
 import model.vo.NivelVO;
 import model.vo.UsuarioVO;
@@ -82,10 +80,10 @@ public class ListagemUsuarioGUI {
 		JButton btnConsultarPorNivel = new JButton("Consultar por nível");
 		btnConsultarPorNivel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
-				
+
+
+
+
 
 			}
 		});
@@ -95,12 +93,10 @@ public class ListagemUsuarioGUI {
 		JButton btnConsultarPorNome = new JButton("Consultar por nome");
 		btnConsultarPorNome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO Chamar o método do controller: consultarPorNome(String nome)
-
+				/*METODO QUE CONSULTA POR NOME */
 				String nome = txtNome.getText();
 				UsuarioController controller = new UsuarioController();
-				@SuppressWarnings("unused")
-				String mensagem = controller.consultarPorNome(nome);
+				controller.controllerConsultarPorNome(nome);
 				
 				//Mostrar na tabela a lista retornada
 				ArrayList<UsuarioVO> userVO = new ArrayList<UsuarioVO>();
@@ -110,7 +106,7 @@ public class ListagemUsuarioGUI {
 				userVO.add(u1);
 				userVO.add(u2);
 				userVO.add(u3);
-				
+
 				//Chamar sempre que for atualizar a tabela com os usuários
 				atualizarTabelaUsuarios(userVO);
 			}
@@ -119,6 +115,15 @@ public class ListagemUsuarioGUI {
 		frmListarUsuarios.getContentPane().add(btnConsultarPorNome);
 
 		JButton btnConsultarTodos = new JButton("Consultar todos");
+		btnConsultarTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<UsuarioVO> userVO = new ArrayList<UsuarioVO>();
+				UsuarioController controller = new UsuarioController();
+				controller.consultarTodos();
+				
+				
+			}
+		});
 		btnConsultarTodos.setBounds(70, 85, 240, 30);
 		frmListarUsuarios.getContentPane().add(btnConsultarTodos);
 
@@ -132,13 +137,13 @@ public class ListagemUsuarioGUI {
 
 		//Cria a tabela vazia apenas com as colunas
 		tblUsuarios.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"id", "Nome", "email"},
-			},
-			new String[] {
-				"id", "Nome", "email"
-			}
-		));
+				new Object[][] {
+					{"id", "Nome", "email"},
+				},
+				new String[] {
+						"id", "Nome", "email"
+				}
+				));
 
 		tblUsuarios.setBounds(70, 120, 480, 230);
 		frmListarUsuarios.getContentPane().add(tblUsuarios);
@@ -150,11 +155,12 @@ public class ListagemUsuarioGUI {
 	 */
 	protected void atualizarTabelaUsuarios(ArrayList<UsuarioVO> usuarios) {
 		DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-		
-		Object novaLinha[] = new Object[2];
+
+		Object novaLinha[] = new Object[3];
 		for(UsuarioVO userVO: usuarios){
 			novaLinha[0] = userVO.getNivel().getId();
 			novaLinha[1] = userVO.getNome();
+			novaLinha[2] = userVO.getEmail();
 			model.addRow(novaLinha);
 		}
 	}
