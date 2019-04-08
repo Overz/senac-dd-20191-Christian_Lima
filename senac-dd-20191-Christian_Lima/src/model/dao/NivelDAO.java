@@ -23,8 +23,9 @@ public class NivelDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		NivelVO nivelVO = null;
+		
 		try {
+			NivelVO nivelVO = null;
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
 				nivelVO = new NivelVO();
@@ -42,7 +43,7 @@ public class NivelDAO {
 			Banco.closeConnection(conn);
 		}
 
-		return nivelVO;
+		return null;
 	}
 
 }

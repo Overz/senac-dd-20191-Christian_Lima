@@ -2,6 +2,7 @@ package model.vo;
 
 public class UsuarioVO {
 	
+	private int id;
 	private String email;
 	private String nome;
 	private String senha;
@@ -18,6 +19,22 @@ public class UsuarioVO {
 	
 	public UsuarioVO() {
 		super();
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public NivelVO getNivelVO() {
+		return nivelVO;
+	}
+
+	public void setNivelVO(NivelVO nivelVO) {
+		this.nivelVO = nivelVO;
 	}
 
 	public String getEmail() {

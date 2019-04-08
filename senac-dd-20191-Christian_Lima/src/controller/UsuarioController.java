@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.bo.UsuarioBO;
 import model.vo.NivelVO;
@@ -59,8 +58,7 @@ public class UsuarioController {
 	 * @param nivelSelecionado
 	 * @return mensagem
 	 */
-	public String consultarPermissao (String email, String senha, String senhaConfirmacao, NivelVO nivelSelecionado) {
-		UsuarioVO userVO = new UsuarioVO(null, email, senha, nivelSelecionado);
+	public String consultarPermissao (String email, String senha, String senhaConfirmacao) {
 		String mensagem = "";
 
 		if (email == null || email.isEmpty()) {
@@ -76,13 +74,9 @@ public class UsuarioController {
 			}
 		}
 
-		if (nivelSelecionado == null) {
-			mensagem = "Por favor, Escolha o Nivel!";
-		}
-
 		if (mensagem == null || mensagem.isEmpty()) {
 			UsuarioBO userBO = new UsuarioBO();
-			mensagem = userBO.verificarPermissao(userVO, email, senha);
+			mensagem = userBO.verificarPermissao(email, senha);
 		}
 		
 
@@ -113,41 +107,18 @@ public class UsuarioController {
 		return mensagem;
 	}
 
-	/**
-	 * Método para consultar nome, chamando método auxiliar 'controllerVerificarNomeCorreto'
-	 * verificando se o campo Nome esta preenchido, caso sim, prossegue com a busca no banco.
-	 * @param nome a ser consultado
-	 * @return userVO Usuario completo, com id, nome e email
-	 */
-	public UsuarioVO controllerConsultarPorNome(String nome){
-		UsuarioVO userVO = null;
-		UsuarioBO userBO = new UsuarioBO();
-
-		controllerVerificarNomeCorreto(nome);
-		userVO = userBO.consultarPorNomeBO(nome);
-
-		return userVO;
-	}
-	/**
-	 * Método auxiliar de 'controllerVerificarNomeCorreto', retornando uma mensagem caso esteja vazio o campo nome;
-	 * @param nome
-	 * @return mensagem
-	 */
-	private String controllerVerificarNomeCorreto(String nome) {
-		String mensagem = "";
-
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome!";
-		}
-		return mensagem;
-	}
-
 	public ArrayList<UsuarioVO> consultarTodos() {
 		UsuarioBO userBO = new UsuarioBO();
 		return userBO.consultarTodos();
-
 	}
-	
-	
-	
+
+	public ArrayList<UsuarioVO> consultarUsuariosPorNome(String nome) {
+		UsuarioBO userBO = new UsuarioBO();
+		return userBO.consultarUsuariosPorNome(nome);
+	}
+
+	public ArrayList<UsuarioVO> controllerConsultarPorNivel(NivelVO nivelSelecionado) {
+		UsuarioBO userBO = new UsuarioBO();
+		return userBO.consultarUsuarioPorNivelBO(nivelSelecionado);
+	}
 }

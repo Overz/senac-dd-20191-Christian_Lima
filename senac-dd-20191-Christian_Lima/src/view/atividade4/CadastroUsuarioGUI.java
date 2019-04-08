@@ -19,13 +19,6 @@ import javax.swing.SwingConstants;
 import controller.UsuarioController;
 import model.vo.NivelVO;
 
-/**
- * 
- * Tela de cadastro de usuários (item 1a da Atividade 4)
- * 
- * @author Vilmar César Pereira Júnior
- *
- */
 public class CadastroUsuarioGUI {
 
 	private JFrame frmCadastroDeUsuarios;
@@ -37,9 +30,6 @@ public class CadastroUsuarioGUI {
 	private JPasswordField pfConfirmacaoSenha;
 	private List<NivelVO> niveis;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,16 +43,10 @@ public class CadastroUsuarioGUI {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public CadastroUsuarioGUI() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 

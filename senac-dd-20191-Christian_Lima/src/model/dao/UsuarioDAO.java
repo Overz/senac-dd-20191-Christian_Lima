@@ -75,30 +75,31 @@ public class UsuarioDAO {
 	 * @param senha
 	 * @return um usuário, caso email e senha estejam corretos
 	 */
-	public UsuarioVO consultarPorEmailESenha(UsuarioVO userVO, String email, String senha) {
+	public UsuarioVO consultarPorEmailESenha(String email, String senha) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		
-		
 		String query = "SELECT * FROM USUARIO"
 				+ " WHERE UPPER(email) = '" + email.toUpperCase() + "' "
 				+ " AND UPPER(senha) = '" + senha.toUpperCase() + "' ";
-		
-		/*String query = "SELECT * FROM USUARIO"
-				+ " WHERE ID = " + userVO.getNivel().getId();*/
+
 		try {
+			UsuarioVO userVO = null;
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
 				userVO = new UsuarioVO();
 				//Constrói um usuário com os dados retornados pela consulta
 				userVO.setEmail(resultado.getString("email"));
 				userVO.setSenha(resultado.getString("senha"));
+				userVO.setNome(resultado.getString("nome"));
+				userVO.setId(resultado.getInt("id"));
 
 				int idNivel = resultado.getInt("idNivel");
 				
 				NivelDAO nivelDAO =  new NivelDAO();
 				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
+				
 				userVO.setNivel(nivel);
 				return userVO;
 			}
@@ -110,10 +111,9 @@ public class UsuarioDAO {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return userVO;
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	public ArrayList<UsuarioVO> consultarTodos() {
 		String query = "SELECT * FROM USUARIOS";
 
@@ -121,15 +121,16 @@ public class UsuarioDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		UsuarioVO userVO = null;
+		ArrayList<UsuarioVO> listagem = null;
 		try {
 			resultado = stmt.executeQuery(query);
-			ArrayList<UsuarioVO> listagem = new ArrayList<UsuarioVO>();
+			listagem = new ArrayList<UsuarioVO>();
 
 			while (resultado.next()) {
 				userVO = new UsuarioVO();
 				userVO.setNome(resultado.getString("nome"));
-				userVO.setNome(resultado.getString("email"));
-				userVO.setNome(resultado.getString("senha"));
+				userVO.setEmail(resultado.getString("email"));
+				userVO.setSenha(resultado.getString("senha"));
 				int idNivel = resultado.getInt("idNivel");
 
 				NivelDAO nivelDAO = new NivelDAO();
@@ -149,24 +150,29 @@ public class UsuarioDAO {
 			Banco.closeConnection(conn);
 		}
 
-		return null;
+		return listagem;
 	}
 
-	public UsuarioVO consultarPorNomeDAO(String nome) {
-		String query = "SELECT UPPER(nome) FROM USUARIO WHERE nome LIKE '" + nome + "'";
-		UsuarioVO userVO = new UsuarioVO();
-		
+	public ArrayList<UsuarioVO> consultarPorNomeDAO(String nome) {
+		String query = "SELECT * FROM USUARIO WHERE nome LIKE '" + nome + "'";
+
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		
+		UsuarioVO userVO = null;
+		ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				userVO.setNivel(resultado.getInt("id"));
+				userVO = new UsuarioVO();
 				userVO.setNome(resultado.getString("nome"));
 				userVO.setEmail(resultado.getString("email"));
-				//userVO.setNivel((NivelVO) resultado.getClob(4));
+				userVO.setSenha(resultado.getString("senha"));
+				int idNivel = resultado.getInt("id");
+				NivelDAO nivelDAO = new NivelDAO();
+				NivelVO nivelVO = nivelDAO.consultarPorId(idNivel);
+				
+				usuarios.add(userVO);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao consultar por nome no banco.\nErro: " + e.getMessage());
@@ -177,6 +183,21 @@ public class UsuarioDAO {
 			Banco.closeConnection(conn);
 		}
 		
-		return userVO;
+		return usuarios;
+	}
+
+	public ArrayList<UsuarioVO> consultarPorNivelDAO(NivelVO nivelSelecionado) {
+		String query = "SELECT * FROM NIVEL WHERE id = " + nivelSelecionado;
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		
+		
+		//TODO implementar o método que buscar por nivel
+		
+		
+		return null;
 	}
 }

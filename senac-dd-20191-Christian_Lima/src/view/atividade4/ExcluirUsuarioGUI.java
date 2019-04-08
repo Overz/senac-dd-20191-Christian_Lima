@@ -26,7 +26,6 @@ public class ExcluirUsuarioGUI {
 
 	private JFrame frmExcluirUsuarios;
 	private JTextField txtEmail;
-	private JComboBox cbNivel;
 	private JPasswordField pfSenha;
 	private JPasswordField pfConfirmacaoSenha;
 	private List<NivelVO> niveis;
@@ -56,7 +55,7 @@ public class ExcluirUsuarioGUI {
 		
 		frmExcluirUsuarios = new JFrame();
 		frmExcluirUsuarios.setTitle("Exclusao de Usuarios");
-		frmExcluirUsuarios.setBounds(100, 100, 387, 320);
+		frmExcluirUsuarios.setBounds(100, 100, 387, 282);
 		frmExcluirUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmExcluirUsuarios.getContentPane().setLayout(null);
 		
@@ -73,16 +72,12 @@ public class ExcluirUsuarioGUI {
 		lblConfirmaoDeSenha.setBounds(165, 51, 94, 16);
 		frmExcluirUsuarios.getContentPane().add(lblConfirmaoDeSenha);
 		
-		JLabel lblNivel = new JLabel("Nível:");
-		lblNivel.setBounds(20, 86, 55, 15);
-		frmExcluirUsuarios.getContentPane().add(lblNivel);
-		
 		JLabel labelNomeExcluir = new JLabel("Nome:");
-		labelNomeExcluir.setBounds(20, 174, 55, 15);
+		labelNomeExcluir.setBounds(20, 139, 55, 15);
 		frmExcluirUsuarios.getContentPane().add(labelNomeExcluir);
 		
 		JLabel lblEmailExcluir = new JLabel("Email:");
-		lblEmailExcluir.setBounds(20, 209, 55, 15);
+		lblEmailExcluir.setBounds(20, 174, 55, 15);
 		frmExcluirUsuarios.getContentPane().add(lblEmailExcluir);
 		
 		txtEmail = new JTextField();
@@ -101,25 +96,15 @@ public class ExcluirUsuarioGUI {
 		txtNomeExcluir = new JTextField();
 		txtNomeExcluir.setEnabled(false);
 		txtNomeExcluir.setColumns(10);
-		txtNomeExcluir.setBounds(70, 169, 280, 28);
+		txtNomeExcluir.setBounds(70, 134, 280, 28);
 		frmExcluirUsuarios.getContentPane().add(txtNomeExcluir);
 		
 		txtEmailExcluir = new JTextField();
 		txtEmailExcluir.setEnabled(false);
 		txtEmailExcluir.setColumns(10);
-		txtEmailExcluir.setBounds(70, 204, 280, 28);
+		txtEmailExcluir.setBounds(70, 169, 280, 28);
 		frmExcluirUsuarios.getContentPane().add(txtEmailExcluir);
-		
-		//Novo componente: Combobox
-		cbNivel = new JComboBox();
-		cbNivel.setModel(new DefaultComboBoxModel(niveis.toArray()));
 		consultarNiveis();
-		
-		//Inicia sem nada selecionado no combo
-		cbNivel.setSelectedIndex(-1);
-		
-		cbNivel.setBounds(70, 81, 280, 28);
-		frmExcluirUsuarios.getContentPane().add(cbNivel);
 		
 		JButton btnLimpar2 = new JButton("Limpar");
 		btnLimpar2.setEnabled(false);
@@ -139,7 +124,6 @@ public class ExcluirUsuarioGUI {
 				String email = txtEmail.getText();
 				String senha = pfSenha.getText();
 				String confirmacao = pfConfirmacaoSenha.getText();
-				NivelVO nivelSelecionado = (NivelVO) cbNivel.getSelectedItem();
 				
 				UsuarioController controlador = new UsuarioController();
 				String mensagem = controlador.excluir(email, senha);
@@ -157,12 +141,11 @@ public class ExcluirUsuarioGUI {
 				String email = txtEmail.getText();
 				String senha = pfSenha.getText();
 				String confirmacao = pfConfirmacaoSenha.getText();
-				NivelVO nivelSelecionado = (NivelVO) cbNivel.getSelectedItem();
 				// verificação
 				UsuarioController controller = new UsuarioController();
-				String mensagem = controller.consultarPermissao(email, senha, confirmacao, nivelSelecionado);
+				String mensagem = controller.consultarPermissao(email, senha, confirmacao);
 				
-				if (mensagem == null || mensagem.isEmpty()) {
+				if (mensagem.equalsIgnoreCase("Login Aprovado!")) {
 					txtNomeExcluir.setEnabled(true);
 					txtEmailExcluir.setEnabled(true);
 					btnExcluir.setEnabled(true);
@@ -173,9 +156,9 @@ public class ExcluirUsuarioGUI {
 			}
 		});
 		
-		btnExcluir.setBounds(69, 242, 146, 25);
+		btnExcluir.setBounds(69, 207, 146, 25);
 		frmExcluirUsuarios.getContentPane().add(btnExcluir);
-		btnConsultar.setBounds(70, 120, 145, 25);
+		btnConsultar.setBounds(70, 85, 145, 25);
 		frmExcluirUsuarios.getContentPane().add(btnConsultar);
 		
 		JButton btnLimpar1 = new JButton("Limpar");
@@ -184,18 +167,17 @@ public class ExcluirUsuarioGUI {
 				txtEmail.setText("");
 				pfSenha.setText("");
 				pfConfirmacaoSenha.setText("");
-				cbNivel.setSelectedIndex(-1);
 			}
 		});
-		btnLimpar1.setBounds(225, 120, 125, 25);
+		btnLimpar1.setBounds(225, 85, 125, 25);
 		frmExcluirUsuarios.getContentPane().add(btnLimpar1);
-		btnLimpar2.setBounds(225, 242, 125, 25);
+		btnLimpar2.setBounds(225, 207, 125, 25);
 		frmExcluirUsuarios.getContentPane().add(btnLimpar2);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
-		separator.setBounds(20, 156, 341, 2);
+		separator.setBounds(20, 121, 341, 2);
 		frmExcluirUsuarios.getContentPane().add(separator);
 	}
 	private void consultarNiveis() {
