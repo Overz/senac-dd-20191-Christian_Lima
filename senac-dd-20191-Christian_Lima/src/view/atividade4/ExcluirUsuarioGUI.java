@@ -3,6 +3,9 @@ package view.atividade4;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,20 +15,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import controller.UsuarioController;
-import model.vo.NivelVO;
 import javax.swing.JSeparator;
 import java.awt.Color;
+
+import controller.UsuarioController;
+import model.vo.NivelVO;
+
 
 public class ExcluirUsuarioGUI {
 
 	private JFrame frmExcluirUsuarios;
 	private JTextField txtEmail;
-	@SuppressWarnings("rawtypes")
 	private JComboBox cbNivel;
 	private JPasswordField pfSenha;
 	private JPasswordField pfConfirmacaoSenha;
-	private java.util.List<NivelVO> niveis;
+	private List<NivelVO> niveis;
 	private JTextField txtNomeExcluir;
 	private JTextField txtEmailExcluir;
 
@@ -36,7 +40,7 @@ public class ExcluirUsuarioGUI {
 					ExcluirUsuarioGUI window = new ExcluirUsuarioGUI();
 					window.frmExcluirUsuarios.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 		});
@@ -46,8 +50,9 @@ public class ExcluirUsuarioGUI {
 		initialize();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
+		
+		consultarNiveis();
 		
 		frmExcluirUsuarios = new JFrame();
 		frmExcluirUsuarios.setTitle("Exclusao de Usuarios");
@@ -108,6 +113,7 @@ public class ExcluirUsuarioGUI {
 		//Novo componente: Combobox
 		cbNivel = new JComboBox();
 		cbNivel.setModel(new DefaultComboBoxModel(niveis.toArray()));
+		consultarNiveis();
 		
 		//Inicia sem nada selecionado no combo
 		cbNivel.setSelectedIndex(-1);
@@ -115,14 +121,12 @@ public class ExcluirUsuarioGUI {
 		cbNivel.setBounds(70, 81, 280, 28);
 		frmExcluirUsuarios.getContentPane().add(cbNivel);
 		
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setEnabled(false);
-		btnLimpar.addActionListener(new ActionListener() {
+		JButton btnLimpar2 = new JButton("Limpar");
+		btnLimpar2.setEnabled(false);
+		btnLimpar2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtEmail.setText("");
-				pfSenha.setText("");
-				pfConfirmacaoSenha.setText("");
-				cbNivel.setSelectedIndex(-1);
+				txtEmailExcluir.setText("");
+				txtNomeExcluir.setText("");
 			}
 		});
 		
@@ -162,7 +166,7 @@ public class ExcluirUsuarioGUI {
 					txtNomeExcluir.setEnabled(true);
 					txtEmailExcluir.setEnabled(true);
 					btnExcluir.setEnabled(true);
-					btnLimpar.setEnabled(true);
+					btnLimpar2.setEnabled(true);
 					
 				}
 			JOptionPane.showMessageDialog(null, mensagem);
@@ -174,8 +178,8 @@ public class ExcluirUsuarioGUI {
 		btnConsultar.setBounds(70, 120, 145, 25);
 		frmExcluirUsuarios.getContentPane().add(btnConsultar);
 		
-		JButton button = new JButton("Limpar");
-		button.addActionListener(new ActionListener() {
+		JButton btnLimpar1 = new JButton("Limpar");
+		btnLimpar1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				txtEmail.setText("");
 				pfSenha.setText("");
@@ -183,16 +187,28 @@ public class ExcluirUsuarioGUI {
 				cbNivel.setSelectedIndex(-1);
 			}
 		});
-		button.setBounds(225, 120, 125, 25);
-		frmExcluirUsuarios.getContentPane().add(button);
-		btnLimpar.setBounds(225, 242, 125, 25);
-		frmExcluirUsuarios.getContentPane().add(btnLimpar);
+		btnLimpar1.setBounds(225, 120, 125, 25);
+		frmExcluirUsuarios.getContentPane().add(btnLimpar1);
+		btnLimpar2.setBounds(225, 242, 125, 25);
+		frmExcluirUsuarios.getContentPane().add(btnLimpar2);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
 		separator.setBounds(20, 156, 341, 2);
 		frmExcluirUsuarios.getContentPane().add(separator);
+	}
+	private void consultarNiveis() {
+
+		//TODO trocar para uma chamada ao BO de Nivel	
+
+		niveis = new ArrayList<NivelVO>();
+
+		NivelVO nivelAdm = new NivelVO(1, "Administrador");
+		NivelVO nivelNormal = new NivelVO(2, "Normal");
+
+		niveis.add(nivelAdm);
+		niveis.add(nivelNormal);
 	}
 
 }

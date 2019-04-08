@@ -20,7 +20,6 @@ public class ListagemUsuarioGUI {
 
 	private JFrame frmListarUsuarios;
 	private JTextField txtNome;
-	@SuppressWarnings("rawtypes")
 	private JComboBox cbNivel;
 	private java.util.List<NivelVO> niveis;
 	private JTable tblUsuarios;
@@ -81,8 +80,8 @@ public class ListagemUsuarioGUI {
 		btnConsultarPorNivel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-
-
+				UsuarioController controller = new UsuarioController();
+				controller.controllerConsultarPorNivel();
 
 
 			}

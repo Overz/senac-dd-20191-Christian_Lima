@@ -49,12 +49,13 @@ public class UsuarioDAO {
 	 * @param userVO
 	 * @return true/false
 	 */
-	public boolean excluir(UsuarioVO userVO) {
+	public boolean excluir(String nome, String email) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-
+		UsuarioVO userVO = new UsuarioVO();
+		
 		String query = "DELETE (nome, email, senha, idNivel) FROM USUARIO"
-				+ " WHERE id = '" + userVO.getNivel().getId() + "' ";
+				+ " WHERE id = " + userVO.getNivel().getId();
 		try {
 			stmt.executeQuery(query);
 			return true;
@@ -74,41 +75,42 @@ public class UsuarioDAO {
 	 * @param senha
 	 * @return um usuário, caso email e senha estejam corretos
 	 */
-	public UsuarioVO consultarPorEmailESenha(String email, String senha) {
+	public UsuarioVO consultarPorEmailESenha(UsuarioVO userVO, String email, String senha) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		UsuarioVO user = null;
 		
 		
 		String query = "SELECT * FROM USUARIO"
 				+ " WHERE UPPER(email) = '" + email.toUpperCase() + "' "
 				+ " AND UPPER(senha) = '" + senha.toUpperCase() + "' ";
 		
+		/*String query = "SELECT * FROM USUARIO"
+				+ " WHERE ID = " + userVO.getNivel().getId();*/
 		try {
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
-				user = new UsuarioVO();
+				userVO = new UsuarioVO();
 				//Constrói um usuário com os dados retornados pela consulta
-				user.setEmail(resultado.getString("email"));
-				user.setSenha(resultado.getString("senha"));
+				userVO.setEmail(resultado.getString("email"));
+				userVO.setSenha(resultado.getString("senha"));
 
 				int idNivel = resultado.getInt("idNivel");
 				
 				NivelDAO nivelDAO =  new NivelDAO();
 				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
-				user.setNivel(nivel);
-				return user;
+				userVO.setNivel(nivel);
+				return userVO;
 			}
 		} catch (SQLException e) {
-			System.out.println("Falha ao Selecionar os Usuarios.\nErro: "+  e.getMessage());
+			System.out.println("Falha ao Selecionar os Usuarios.\nErro: " +  e.getMessage());
 			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return user;
+		return userVO;
 	}
 
 	@SuppressWarnings("unchecked")

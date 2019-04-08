@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.bo.UsuarioBO;
 import model.vo.NivelVO;
@@ -42,14 +43,22 @@ public class UsuarioController {
 		if(mensagem.isEmpty()) {
 			UsuarioVO userVO = new UsuarioVO(nome, email, senha, nivel);
 
-			UsuarioBO bo = new UsuarioBO();
-			mensagem = bo.validarCadastro(userVO);
+			UsuarioBO userBO = new UsuarioBO();
+			mensagem = userBO.validarCadastro(userVO);
 		}
 
 		return mensagem;
 	}
 
-	// VERIFICAÇÂO DE PERMISSÃO
+	/**
+	 * Método que verifica campos validos/invalidos, se true
+	 * manda para o BO verificando permissão para exclusão de usuarios
+	 * @param email
+	 * @param senha
+	 * @param senhaConfirmacao
+	 * @param nivelSelecionado
+	 * @return mensagem
+	 */
 	public String consultarPermissao (String email, String senha, String senhaConfirmacao, NivelVO nivelSelecionado) {
 		UsuarioVO userVO = new UsuarioVO(null, email, senha, nivelSelecionado);
 		String mensagem = "";
@@ -75,50 +84,54 @@ public class UsuarioController {
 			UsuarioBO userBO = new UsuarioBO();
 			mensagem = userBO.verificarPermissao(userVO, email, senha);
 		}
+		
 
 		return mensagem;
 	}
 
-	// VVERIFICAÇÂO PARA EXCLUSAO DO BANCO
+	/**
+	 * Método que verifica possivel exclusão do usuario no banco.
+	 * @param nome
+	 * @param email
+	 * @return
+	 */
 	public String excluir(String nome, String email) {
 		String mensagem = "";
-
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome do usuario a ser excluido!!";
-		}
-
+		UsuarioBO userBO = new UsuarioBO();
+		
 		if (email == null || email.isEmpty()) {
 			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
 		}
 
+		if (nome == null || nome.isEmpty()) {
+			mensagem = "Por favor, Digite o nome do usuario a ser excluido!";
+		}
 		if (mensagem == null || mensagem.isEmpty()) {
-			UsuarioVO userVO = new UsuarioVO();
-			UsuarioBO userBO = new UsuarioBO();
-			userBO.excluir(userVO);
+			userBO.excluir(nome, email);
 		}
 
 		return mensagem;
 	}
 
 	/**
-	 * Verifica se o objeto está null, caso esteja, chama outro metodo para retornar uma mensagem;
-	 * @param nome
-	 * @return userVO
+	 * Método para consultar nome, chamando método auxiliar 'controllerVerificarNomeCorreto'
+	 * verificando se o campo Nome esta preenchido, caso sim, prossegue com a busca no banco.
+	 * @param nome a ser consultado
+	 * @return userVO Usuario completo, com id, nome e email
 	 */
 	public UsuarioVO controllerConsultarPorNome(String nome){
 		UsuarioVO userVO = null;
 		UsuarioBO userBO = new UsuarioBO();
 
 		controllerVerificarNomeCorreto(nome);
-
 		userVO = userBO.consultarPorNomeBO(nome);
 
 		return userVO;
 	}
 	/**
-	 * Método auxiliar de 'consultarPorNome', retornando uma mensagem;
+	 * Método auxiliar de 'controllerVerificarNomeCorreto', retornando uma mensagem caso esteja vazio o campo nome;
 	 * @param nome
-	 * @return
+	 * @return mensagem
 	 */
 	private String controllerVerificarNomeCorreto(String nome) {
 		String mensagem = "";
@@ -134,4 +147,7 @@ public class UsuarioController {
 		return userBO.consultarTodos();
 
 	}
+	
+	
+	
 }

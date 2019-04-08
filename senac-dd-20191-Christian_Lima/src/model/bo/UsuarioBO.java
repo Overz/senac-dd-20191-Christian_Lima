@@ -10,9 +10,9 @@ public class UsuarioBO {
 	private static final int ID_NIVEL_ADMINISTRADOR = 1;
 
 	/**
-	 * @author Christian Lima;
-	 * @param user;
-	 * @return mensagem, verificando regras de negocio, senha,email,nivel, se tudo estiver OK, cria o UsuarioDAO;
+	 * Método que valida regras de negocio para cadastrar o usuario no banco.
+	 * @param userVO;
+	 * @return mensagem registrado com sucesso/campos invalidos;
 	 */
 	public String validarCadastro(UsuarioVO userVO) {
 		String mensagem = "";
@@ -46,46 +46,47 @@ public class UsuarioBO {
 	}
 
 	/**
-	 * Exclui um usuário, caso quem chamou o método tenha permissão de administrador
-	 * @param userVO o usuário a ser excluído
-	 * @param email o email de quem chamou o método
-	 * @param senha a senha de quem chamou o método
-	 * @return
+	 * Exclui um usuário, caso quem chamou o método tenha permissão de administrador;
+	 * @param userVO o usuário a ser excluído;
+	 * @param email o email de quem chamou o método;
+	 * @param senha a senha de quem chamou o método;
+	 * @return mensagem Aprovado/Rejeitado;
 	 */
-	@SuppressWarnings("unused")
 	public String verificarPermissao(UsuarioVO userVO, String email, String senha) {
 		String mensagem = "";
-
 		String[] conferirEmail = new String [2];
 		conferirEmail = userVO.getEmail().split("@");
+
 		if (conferirEmail.length > 2) {
 			mensagem = "Email Invalido!";
 		}
 
-		if (senha.length() <= 6 || senha.length() >= 12) {
+		if (senha.length() <= 5 || senha.length() >= 13) {
 			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
 		}
 
 		UsuarioDAO userDAO = new UsuarioDAO();
-		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(email, senha);
+		UsuarioVO usuarioLogado = userDAO.consultarPorEmailESenha(userVO, email, senha);
 
 		if (usuarioLogado == null) {
 			mensagem = "Login Invalido, por favor, tente novamente!";
-			if (usuarioLogado != null && usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR) {
-				mensagem = null;
-				excluir(userVO);
-			}
+		}/* ERRO */ else if (usuarioLogado != null && usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR)/* ERRO */ {
+			mensagem = "Login Aprovado!";
 		}
 
 		return mensagem;
 	}
-	//Método complementar
-	public String excluir (UsuarioVO userVO) {
+	/**
+	 * Verifica se a exclusão do banco é True, caso sim, retorna uma mensagem;
+	 * @param nome do usuario a ser excluido;
+	 * @param email do usuario a ser excluido;
+	 * @return mensagem valido/invalido;
+	 */
+	public String excluir (String nome, String email) {
 		String mensagem = "";
-
 		UsuarioDAO userDAO = new UsuarioDAO();
 
-		if (userDAO.excluir(userVO) == true) {
+		if (userDAO.excluir (nome, email) == true) {
 			mensagem = "Usuario Excluido com Sucesso!";
 		} else {
 			mensagem = "Erro ao Excluir o Usuario!";
@@ -104,11 +105,11 @@ public class UsuarioBO {
 		UsuarioDAO userDAO = new UsuarioDAO();
 
 		verificarNomeCorretoBO(nome);
-		 userVO = userDAO.consultarPorNomeDAO(nome);
-		
+		userVO = userDAO.consultarPorNomeDAO(nome);
+
 		return userVO ;
 	}
-	
+
 	/**
 	 * Método Auxiliar de 'ConsultarPorNomeBO', verificando regras de negocio
 	 * @param nome
@@ -126,7 +127,10 @@ public class UsuarioBO {
 		return mensagem;
 
 	}
-
+	/**
+	 * Método que busca todos os usuarios no banco
+	 * @return
+	 */
 	public ArrayList<UsuarioVO> consultarTodos() {
 		UsuarioDAO userDAO = new UsuarioDAO();
 		return userDAO.consultarTodos();
