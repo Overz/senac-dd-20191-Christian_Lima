@@ -89,19 +89,16 @@ public class UsuarioController {
 	 * @param email
 	 * @return
 	 */
-	public String excluir(String nome, String email) {
+	public String excluir(UsuarioVO userVO) {
 		String mensagem = "";
 		UsuarioBO userBO = new UsuarioBO();
 		
-		if (email == null || email.isEmpty()) {
-			mensagem = "Por favor, Digite o email do usuario a ser excluido!";
+		if (userVO == null) {
+			mensagem = "Por Favor, Selecione um Usuario a Excluir!";
 		}
-
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o nome do usuario a ser excluido!";
-		}
+		
 		if (mensagem == null || mensagem.isEmpty()) {
-			userBO.excluir(nome, email);
+			userBO.excluir(userVO);
 		}
 
 		return mensagem;

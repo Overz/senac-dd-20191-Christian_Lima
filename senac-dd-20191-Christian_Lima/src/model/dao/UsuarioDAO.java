@@ -49,18 +49,18 @@ public class UsuarioDAO {
 	 * @param userVO
 	 * @return true/false
 	 */
-	public boolean excluir(String nome, String email) {
+	public boolean excluir(UsuarioVO userVO) {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-		UsuarioVO userVO = new UsuarioVO();
 		
-		String query = "DELETE (nome, email, senha, idNivel) FROM USUARIO"
-				+ " WHERE id = " + userVO.getNivel().getId();
+		String query = "DELETE FROM USUARIO WHERE ID = " + userVO.getId();
 		try {
-			stmt.executeQuery(query);
+			stmt.executeLargeUpdate(query);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Erro ao excluir Usuario. Erro: " + e.getMessage());
+			System.out.println("Erro ao excluir Usuario.");
+			System.out.println("Erro: " + e.getMessage());
+			System.out.println(query);
 
 		} finally {
 			Banco.closeStatement(stmt);
@@ -73,7 +73,7 @@ public class UsuarioDAO {
 	 * Obtém um usuário dado nome, email e senha
 	 * @param email
 	 * @param senha
-	 * @return um usuário, caso email e senha estejam corretos
+	 * @return usuário, caso email e senha estejam corretos
 	 */
 	public UsuarioVO consultarPorEmailESenha(String email, String senha) {
 		Connection conn = Banco.getConnection();
@@ -104,7 +104,8 @@ public class UsuarioDAO {
 				return userVO;
 			}
 		} catch (SQLException e) {
-			System.out.println("Falha ao Selecionar os Usuarios.\nErro: " +  e.getMessage());
+			System.out.println("Erro ao Consultar Permissão do Usuario Logado");
+			System.out.println("Erro: " +  e.getMessage());
 			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -114,20 +115,23 @@ public class UsuarioDAO {
 		return null;
 	}
 
+	/**
+	 * Método que retorna um ArrayList com Todos os Usuarios existentes no banco.
+	 * @return ArrayList com Todos usuarios;
+	 */
 	public ArrayList<UsuarioVO> consultarTodos() {
-		String query = "SELECT * FROM USUARIOS";
+		String query = "SELECT * FROM USUARIO";
 
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		UsuarioVO userVO = null;
-		ArrayList<UsuarioVO> listagem = null;
+		ArrayList<UsuarioVO> listagem = new ArrayList<UsuarioVO>();
 		try {
 			resultado = stmt.executeQuery(query);
-			listagem = new ArrayList<UsuarioVO>();
-
 			while (resultado.next()) {
 				userVO = new UsuarioVO();
+				userVO.setId(resultado.getInt("id"));
 				userVO.setNome(resultado.getString("nome"));
 				userVO.setEmail(resultado.getString("email"));
 				userVO.setSenha(resultado.getString("senha"));
@@ -139,10 +143,8 @@ public class UsuarioDAO {
 				
 				listagem.add(userVO);
 			}
-
-			return listagem; 
 		} catch (SQLException e) {
-			System.out.println("Erro ao Listar os Usuarios. Erro: " + e.getMessage());
+			System.out.println("Erro ao Listar TODOS os Usuarios. Erro: " + e.getMessage());
 			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -153,8 +155,13 @@ public class UsuarioDAO {
 		return listagem;
 	}
 
+	/**
+	 * Método que dado um NOME, buscar o Usuario no banco.
+	 * @param nome
+	 * @return ArrayList de Usuario Completo
+	 */
 	public ArrayList<UsuarioVO> consultarPorNomeDAO(String nome) {
-		String query = "SELECT * FROM USUARIO WHERE nome LIKE '" + nome + "'";
+		String query = "SELECT * FROM USUARIO WHERE UPPER(nome) LIKE '%" + nome.toUpperCase() + "%'";
 
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
@@ -175,7 +182,8 @@ public class UsuarioDAO {
 				usuarios.add(userVO);
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao consultar por nome no banco.\nErro: " + e.getMessage());
+			System.out.println("Erro ao consultar por NOME no banco.");
+					System.out.println("Erro: " + e.getMessage());
 			System.out.println(query);
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -186,18 +194,41 @@ public class UsuarioDAO {
 		return usuarios;
 	}
 
+	/**
+	 * Método que dado um NIVEl, buscar o usuario no banco.
+	 * @param nivelSelecionado NivelVO
+	 * @return ArrayList de Usuarios por Nivel
+	 */
 	public ArrayList<UsuarioVO> consultarPorNivelDAO(NivelVO nivelSelecionado) {
 		String query = "SELECT * FROM NIVEL WHERE id = " + nivelSelecionado;
-		
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		UsuarioVO userVO = null;
+		ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				userVO = new UsuarioVO();
+				userVO.setNome(resultado.getString("nome"));
+				userVO.setEmail(resultado.getString("email"));
+				userVO.setSenha(resultado.getString("senha"));
+				int idNivel = resultado.getInt("id");
+				NivelDAO nivelDAO = new NivelDAO();
+				NivelVO nivelVO = nivelDAO.consultarPorId(idNivel);
+				
+				usuarios.add(userVO);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao consultar por Nivel no banco.");
+			System.out.println("Erro: " + e.getMessage());
+			System.out.println(query);
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closePreparedStatement(stmt);
+			Banco.closeConnection(conn);
+		}
 		
-		
-		
-		//TODO implementar o método que buscar por nivel
-		
-		
-		return null;
+		return usuarios;
 	}
 }

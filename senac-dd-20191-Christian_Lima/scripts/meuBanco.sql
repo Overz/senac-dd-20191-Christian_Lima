@@ -33,3 +33,5 @@ INSERT INTO `meubanco`.`usuario` (`id`, `nome`, `email`, `senha`, `idNivel`) VAL
 INSERT INTO `meubanco`.`usuario` (`id`, `nome`, `email`, `senha`, `idNivel`) VALUES ('4', 'gabriel', '4@4.com', '123456', '2');
 INSERT INTO `meubanco`.`usuario` (`id`, `nome`, `email`, `senha`, `idNivel`) VALUES ('5', 'guilherme', '5@5.com', '123456', '2');
 
+INSERT INTO `meubanco`.`nivel` (`id`, `descricao`) VALUES ('1', 'Administrador');
+INSERT INTO `meubanco`.`nivel` (`id`, `descricao`) VALUES ('2', 'Normal');

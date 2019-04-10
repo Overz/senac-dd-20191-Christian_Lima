@@ -82,12 +82,14 @@ public class UsuarioBO {
 	 * @param email do usuario a ser excluido;
 	 * @return mensagem valido/invalido;
 	 */
-	public String excluir (String nome, String email) {
+	public String excluir (UsuarioVO userVO) {
 		String mensagem = "";
 		UsuarioDAO userDAO = new UsuarioDAO();
-
-		if (userDAO.excluir (nome, email) == true) {
-			mensagem = "Usuario Excluido com Sucesso!";
+		
+		boolean retornoExclusao = userDAO.excluir(userVO);
+		
+		if (retornoExclusao == true) {
+			mensagem = "Usuario " + userVO.toString() + "Excluido com Sucesso!";
 		} else {
 			mensagem = "Erro ao Excluir o Usuario!";
 		}

@@ -36,7 +36,8 @@ public class NivelDAO {
 			}
 		return nivelVO;
 		} catch (SQLException e) {
-			System.out.println("Erro ao obter resultados da tabela Usuario junto a Nivel. Erro: " + e.getMessage());
+			System.out.println("Erro ao obter resultados da tabela Nivel");
+			System.out.println("Erro: " + e.getMessage());
 			System.out.println(query);
 		} finally {
 			Banco.closePreparedStatement(stmt);

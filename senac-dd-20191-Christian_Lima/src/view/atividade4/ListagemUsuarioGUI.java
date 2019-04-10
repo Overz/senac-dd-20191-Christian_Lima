@@ -20,7 +20,7 @@ public class ListagemUsuarioGUI {
 
 	private JFrame frmListarUsuarios;
 	private JTextField txtNome;
-	private JComboBox cbNivel;
+	private JComboBox<NivelVO> cbNivel;
 	private java.util.List<NivelVO> niveis;
 	private JTable tblUsuarios;
 
@@ -41,11 +41,9 @@ public class ListagemUsuarioGUI {
 		initialize();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 
-		//TODO consultar os níveis no banco (criei na mão aqui :D)
-		consultarNiveis(); //TODO alterar esta chamada AQUI
+		consultarNiveis();
 
 		frmListarUsuarios = new JFrame();
 		frmListarUsuarios.setTitle("Consulta de usuários");
@@ -99,6 +97,9 @@ public class ListagemUsuarioGUI {
 				UsuarioController controller = new UsuarioController();
 				ArrayList<UsuarioVO> usuarios = controller.consultarUsuariosPorNome(nome);
 				
+				//array list retornando vazio
+				System.out.println(usuarios);
+				
 				//Chamar sempre que for atualizar a tabela com os usuários
 				atualizarTabelaUsuarios(usuarios);
 			}
@@ -118,6 +119,12 @@ public class ListagemUsuarioGUI {
 		frmListarUsuarios.getContentPane().add(btnConsultarTodos);
 
 		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtNome.setText("");
+				limparTela();
+			}
+		});
 		btnLimpar.setBounds(310, 85, 240, 30);
 		frmListarUsuarios.getContentPane().add(btnLimpar);
 
@@ -137,7 +144,14 @@ public class ListagemUsuarioGUI {
 
 		tblUsuarios.setBounds(70, 120, 480, 230);
 		frmListarUsuarios.getContentPane().add(tblUsuarios);
+		
 	}
+	
+	public void limparTela() {
+		tblUsuarios.setModel(new DefaultTableModel(
+			new Object[][] {{"id", "Nome", "email", "Nível"}},
+			new String[] {"id", "Nome", "email", "Nível"}));
+		}
 
 	/**
 	 * Atualiza o JTable de usuários.
@@ -146,7 +160,7 @@ public class ListagemUsuarioGUI {
 	protected void atualizarTabelaUsuarios(ArrayList<UsuarioVO> usuarios) {
 		DefaultTableModel modeloTabela = (DefaultTableModel) tblUsuarios.getModel();
 
-		Object novaLinha[] = new Object[3];
+		Object novaLinha[] = new Object[4];
 		for(int i = 0; i < usuarios.size(); i++){
 			UsuarioVO userVO = usuarios.get(i);
 			novaLinha[0] = userVO.getId();
@@ -158,12 +172,9 @@ public class ListagemUsuarioGUI {
 	}
 
 	private void consultarNiveis() {
-		//TODO trocar para uma chamada ao BO de Nivel	
 		niveis = new ArrayList<NivelVO>();
-
 		NivelVO nivelAdm = new NivelVO(1, "Administrador");
 		NivelVO nivelNormal = new NivelVO(2, "Normal");
-
 		niveis.add(nivelAdm);
 		niveis.add(nivelNormal);
 	}

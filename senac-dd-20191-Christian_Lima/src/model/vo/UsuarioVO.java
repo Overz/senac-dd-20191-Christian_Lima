@@ -79,6 +79,7 @@ public class UsuarioVO {
 	@Override
 	public String toString() {
 		return "Confirmação de Cadastro: "
+				+ "\nID:" + this.getId()
 				+ "\nEmail:" + this.getEmail() 
 				+ "\nNome:" + this.getNome() 
 				+ "\nSenha:" + this.getSenha()
