@@ -18,6 +18,12 @@ import javax.swing.SwingConstants;
 
 import controller.UsuarioController;
 import model.vo.NivelVO;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JCheckBoxMenuItem;
 
 public class CadastroUsuarioGUI {
 
@@ -55,47 +61,47 @@ public class CadastroUsuarioGUI {
 
 		frmCadastroDeUsuarios = new JFrame();
 		frmCadastroDeUsuarios.setTitle("Cadastro de usuários");
-		frmCadastroDeUsuarios.setBounds(100, 100, 376, 237);
+		frmCadastroDeUsuarios.setBounds(100, 100, 365, 233);
 		frmCadastroDeUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCadastroDeUsuarios.getContentPane().setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(20, 20, 55, 15);
+		lblNome.setBounds(10, 16, 55, 15);
 		frmCadastroDeUsuarios.getContentPane().add(lblNome);
 
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(20, 55, 55, 15);
+		lblEmail.setBounds(10, 51, 55, 15);
 		frmCadastroDeUsuarios.getContentPane().add(lblEmail);
 
 		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(20, 90, 55, 15);
+		lblSenha.setBounds(10, 86, 55, 15);
 		frmCadastroDeUsuarios.getContentPane().add(lblSenha);
 
 		JLabel lblConfirmaoDeSenha = new JLabel("Confirmação:");
 		lblConfirmaoDeSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblConfirmaoDeSenha.setBounds(165, 90, 94, 16);
+		lblConfirmaoDeSenha.setBounds(155, 86, 94, 16);
 		frmCadastroDeUsuarios.getContentPane().add(lblConfirmaoDeSenha);
 
 		JLabel lblNivel = new JLabel("Nível:");
-		lblNivel.setBounds(20, 125, 55, 15);
+		lblNivel.setBounds(10, 121, 55, 15);
 		frmCadastroDeUsuarios.getContentPane().add(lblNivel);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(70, 15, 280, 28);
+		txtNome.setBounds(60, 11, 280, 28);
 		frmCadastroDeUsuarios.getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 
 		txtEmail = new JTextField();
-		txtEmail.setBounds(70, 50, 280, 28);
+		txtEmail.setBounds(60, 46, 280, 28);
 		frmCadastroDeUsuarios.getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 
 		pfSenha = new JPasswordField();
-		pfSenha.setBounds(70, 85, 90, 28);
+		pfSenha.setBounds(60, 81, 90, 28);
 		frmCadastroDeUsuarios.getContentPane().add(pfSenha);
 
 		pfConfirmacaoSenha = new JPasswordField();
-		pfConfirmacaoSenha.setBounds(260, 84, 90, 28);
+		pfConfirmacaoSenha.setBounds(250, 80, 90, 28);
 		frmCadastroDeUsuarios.getContentPane().add(pfConfirmacaoSenha);
 
 		//Novo componente: Combobox
@@ -105,7 +111,7 @@ public class CadastroUsuarioGUI {
 		//Inicia sem nada selecionado no combo
 		cbNivel.setSelectedIndex(-1);
 
-		cbNivel.setBounds(70, 120, 280, 28);
+		cbNivel.setBounds(60, 116, 280, 28);
 		frmCadastroDeUsuarios.getContentPane().add(cbNivel);
 
 		JButton btnLimpar = new JButton("Limpar");
@@ -118,7 +124,7 @@ public class CadastroUsuarioGUI {
 				cbNivel.setSelectedIndex(-1);
 			}
 		});
-		btnLimpar.setBounds(190, 155, 160, 35);
+		btnLimpar.setBounds(180, 151, 160, 35);
 		frmCadastroDeUsuarios.getContentPane().add(btnLimpar);
 
 		JButton button = new JButton("Salvar");
@@ -141,7 +147,7 @@ public class CadastroUsuarioGUI {
 				JOptionPane.showMessageDialog(null, mensagem);
 			}
 		});
-		button.setBounds(20, 155, 160, 35);
+		button.setBounds(10, 151, 160, 35);
 		frmCadastroDeUsuarios.getContentPane().add(button);
 	}
 

@@ -29,7 +29,7 @@ public class UsuarioBO {
 			mensagem = "Senha deve ser maior que 6 e menor que 12 Caracteres!";
 		}
 
-		if (userVO.getNivel() == null) {
+		if (userVO.getNivelVO() == null) {
 			mensagem = "Por favor, selecione o Nivel!";
 		}
 
@@ -70,7 +70,7 @@ public class UsuarioBO {
 
 		if (usuarioLogado == null) {
 			mensagem = "Login Invalido, por favor, tente novamente!";
-		} else if (usuarioLogado != null && usuarioLogado.getNivel().getId() == ID_NIVEL_ADMINISTRADOR) {
+		} else if (usuarioLogado != null && usuarioLogado.getNivelVO().getId() == ID_NIVEL_ADMINISTRADOR) {
 			mensagem = "Login Aprovado!";
 		}
 
@@ -97,23 +97,6 @@ public class UsuarioBO {
 		return mensagem;
 	}
 
-	/**
-	 * Método Auxiliar de 'ConsultarPorNomeBO', verificando regras de negocio
-	 * @param nome
-	 * @return mensagem
-	 */
-	private String verificarNomeCorretoBO(String nome) {
-		String mensagem = "";
-
-		if (nome == null || nome.isEmpty()) {
-			mensagem = "Por favor, Digite o Nome!";
-		}
-		if (nome.length() <= 3 || nome.length() >= 18) {
-			mensagem = "Nome deve ser maior que 3 e menor que 18 Caracteres!";
-		}
-		return mensagem;
-
-	}
 	/**
 	 * Método que busca todos os usuarios no banco
 	 * @return tudo

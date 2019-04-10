@@ -25,7 +25,7 @@ public class UsuarioDAO {
 
 		String query = "INSERT INTO USUARIO (nome, email, senha, idNivel)"
 				+ "VALUES ('" + userVO.getNome() +"','" + userVO.getEmail()
-				+ "' ,'" + userVO.getSenha() + "', '" + userVO.getNivel().getId() + "')";
+				+ "' ,'" + userVO.getSenha() + "', '" + userVO.getNivelVO().getId() + "')";
 
 		try {
 			int resultado = stmt.executeUpdate(query);
@@ -88,20 +88,8 @@ public class UsuarioDAO {
 			UsuarioVO userVO = null;
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
-				userVO = new UsuarioVO();
-				//Constrói um usuário com os dados retornados pela consulta
-				userVO.setEmail(resultado.getString("email"));
-				userVO.setSenha(resultado.getString("senha"));
-				userVO.setNome(resultado.getString("nome"));
-				userVO.setId(resultado.getInt("id"));
-
-				int idNivel = resultado.getInt("idNivel");
-				
-				NivelDAO nivelDAO =  new NivelDAO();
-				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
-				
-				userVO.setNivel(nivel);
-				return userVO;
+				UsuarioVO usuario = obterUsuarioDoResultSet(resultado);
+				return usuario;
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao Consultar Permissão do Usuario Logado");
@@ -113,6 +101,34 @@ public class UsuarioDAO {
 			Banco.closeConnection(conn);
 		}
 		return null;
+	}
+
+	/**
+	 * Cria um novo usuário a partir do ResultSet
+	 * @param resultado
+	 * @return
+	 */
+	private UsuarioVO obterUsuarioDoResultSet(ResultSet resultado) {
+		UsuarioVO userVO = null;
+		try {
+			//Constrói um usuário com os dados retornados pela consulta
+			userVO = new UsuarioVO();
+			userVO.setId(resultado.getInt("id"));
+			userVO.setEmail(resultado.getString("email"));
+			userVO.setSenha(resultado.getString("senha"));
+			userVO.setNome(resultado.getString("nome"));
+			
+			int idNivel = resultado.getInt("idNivel");
+			
+			NivelDAO nivelDAO =  new NivelDAO();
+			NivelVO nivel = nivelDAO.consultarPorId(idNivel);
+			
+			userVO.setNivelVO(nivel);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return userVO;
 	}
 
 	/**
@@ -130,18 +146,9 @@ public class UsuarioDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while (resultado.next()) {
-				userVO = new UsuarioVO();
-				userVO.setId(resultado.getInt("id"));
-				userVO.setNome(resultado.getString("nome"));
-				userVO.setEmail(resultado.getString("email"));
-				userVO.setSenha(resultado.getString("senha"));
-				int idNivel = resultado.getInt("idNivel");
-
-				NivelDAO nivelDAO = new NivelDAO();
-				NivelVO nivel = nivelDAO.consultarPorId(idNivel);
-				userVO.setNivel(nivel);
+				UsuarioVO usuario = obterUsuarioDoResultSet(resultado);
 				
-				listagem.add(userVO);
+				listagem.add(usuario);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao Listar TODOS os Usuarios. Erro: " + e.getMessage());
@@ -171,15 +178,8 @@ public class UsuarioDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				userVO = new UsuarioVO();
-				userVO.setNome(resultado.getString("nome"));
-				userVO.setEmail(resultado.getString("email"));
-				userVO.setSenha(resultado.getString("senha"));
-				int idNivel = resultado.getInt("id");
-				NivelDAO nivelDAO = new NivelDAO();
-				NivelVO nivelVO = nivelDAO.consultarPorId(idNivel);
-				
-				usuarios.add(userVO);
+				UsuarioVO usuario = obterUsuarioDoResultSet(resultado);
+				usuarios.add(usuario);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao consultar por NOME no banco.");
@@ -200,24 +200,18 @@ public class UsuarioDAO {
 	 * @return ArrayList de Usuarios por Nivel
 	 */
 	public ArrayList<UsuarioVO> consultarPorNivelDAO(NivelVO nivelSelecionado) {
-		String query = "SELECT * FROM NIVEL WHERE id = " + nivelSelecionado;
+		String query = "SELECT * FROM usuario u"
+				+ " WHERE u.idNivel = " + nivelSelecionado.getId();
+		
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		UsuarioVO userVO = null;
 		ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				userVO = new UsuarioVO();
-				userVO.setNome(resultado.getString("nome"));
-				userVO.setEmail(resultado.getString("email"));
-				userVO.setSenha(resultado.getString("senha"));
-				int idNivel = resultado.getInt("id");
-				NivelDAO nivelDAO = new NivelDAO();
-				NivelVO nivelVO = nivelDAO.consultarPorId(idNivel);
-				
-				usuarios.add(userVO);
+				UsuarioVO usuario = obterUsuarioDoResultSet(resultado);
+				usuarios.add(usuario);
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao consultar por Nivel no banco.");

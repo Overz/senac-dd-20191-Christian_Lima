@@ -97,9 +97,6 @@ public class ListagemUsuarioGUI {
 				UsuarioController controller = new UsuarioController();
 				ArrayList<UsuarioVO> usuarios = controller.consultarUsuariosPorNome(nome);
 				
-				//array list retornando vazio
-				System.out.println(usuarios);
-				
 				//Chamar sempre que for atualizar a tabela com os usuários
 				atualizarTabelaUsuarios(usuarios);
 			}
@@ -166,7 +163,7 @@ public class ListagemUsuarioGUI {
 			novaLinha[0] = userVO.getId();
 			novaLinha[1] = userVO.getNome();
 			novaLinha[2] = userVO.getEmail();
-			novaLinha[3] = userVO.getNivel().getDescricao();
+			novaLinha[3] = userVO.getNivelVO().getDescricao();
 			modeloTabela.addRow(novaLinha);
 		}
 	}

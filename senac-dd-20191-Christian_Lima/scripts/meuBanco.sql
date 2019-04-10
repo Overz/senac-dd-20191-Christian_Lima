@@ -1,5 +1,5 @@
 DROP SCHEMA `meubanco` ;
-CREATE SCHEMA NOT EXISTS `meubanco` ;
+CREATE SCHEMA NOT EXISTS `meubanco` DEFAULT CHARSET = utf8 COLLATE = utf8_general_ci;
 
 CREATE TABLE `meubanco`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -7,18 +7,15 @@ CREATE TABLE `meubanco`.`usuario` (
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
   `idNivel` INT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
+  PRIMARY KEY (`id`)
+  FOREIGN KEY (idNivel) REFERENCES nivel(id)
+  ) ENGINE = InnoDB
 
 CREATE TABLE `meubanco`.`nivel` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
+  PRIMARY KEY (`id`)
+  ) ENGINE = InnoDB
 
 ALTER TABLE `meubanco`.`nivel` 
 ADD CONSTRAINT `idNivel`

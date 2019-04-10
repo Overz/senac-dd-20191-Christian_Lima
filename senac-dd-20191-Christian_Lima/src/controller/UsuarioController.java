@@ -11,7 +11,6 @@ public class UsuarioController {
 	//A camada de controle deve validar o preenchimento dos campos, ou seja, 
 	//só pode chamar um BO caso TODOS os dados estejam preenchidos na tela (não-vazios e não-nulos).
 
-
 	// VALIDAÇÃO PARA SALVAR NO BANCO
 	public String salvar(String nome, String email, String senha,  String senhaConfirmacao, NivelVO nivel) {
 		String mensagem = "";
@@ -78,7 +77,6 @@ public class UsuarioController {
 			UsuarioBO userBO = new UsuarioBO();
 			mensagem = userBO.verificarPermissao(email, senha);
 		}
-		
 
 		return mensagem;
 	}

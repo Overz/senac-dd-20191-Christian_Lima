@@ -56,38 +56,38 @@ public class ExcluirUsuarioGUI {
 		
 		frmExcluirUsuarios = new JFrame();
 		frmExcluirUsuarios.setTitle("Exclusao de Usuarios");
-		frmExcluirUsuarios.setBounds(100, 100, 419, 282);
+		frmExcluirUsuarios.setBounds(100, 100, 393, 282);
 		frmExcluirUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmExcluirUsuarios.getContentPane().setLayout(null);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(13, 18, 31, 15);
+		lblEmail.setBounds(13, 18, 51, 15);
 		frmExcluirUsuarios.getContentPane().add(lblEmail);
 		
 		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(13, 52, 38, 15);
+		lblSenha.setBounds(13, 52, 51, 15);
 		frmExcluirUsuarios.getContentPane().add(lblSenha);
 		
 		JLabel lblConfirmaoDeSenha = new JLabel("Confirmação:");
 		lblConfirmaoDeSenha.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblConfirmaoDeSenha.setBounds(199, 51, 66, 16);
+		lblConfirmaoDeSenha.setBounds(187, 51, 66, 16);
 		frmExcluirUsuarios.getContentPane().add(lblConfirmaoDeSenha);
 		
 		JLabel lblUsuarioComboBox = new JLabel("Usuario:");
-		lblUsuarioComboBox.setBounds(13, 148, 41, 14);
+		lblUsuarioComboBox.setBounds(13, 148, 51, 14);
 		frmExcluirUsuarios.getContentPane().add(lblUsuarioComboBox);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(79, 11, 300, 28);
+		txtEmail.setBounds(67, 11, 300, 28);
 		frmExcluirUsuarios.getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 		
 		pfSenha = new JPasswordField();
-		pfSenha.setBounds(79, 46, 110, 28);
+		pfSenha.setBounds(67, 46, 110, 28);
 		frmExcluirUsuarios.getContentPane().add(pfSenha);
 		
 		pfConfirmacaoSenha = new JPasswordField();
-		pfConfirmacaoSenha.setBounds(275, 45, 104, 28);
+		pfConfirmacaoSenha.setBounds(263, 45, 104, 28);
 		frmExcluirUsuarios.getContentPane().add(pfConfirmacaoSenha);
 		consultarNiveis();
 		
@@ -95,15 +95,12 @@ public class ExcluirUsuarioGUI {
 		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String email = txtEmail.getText();
-				String senha = pfSenha.getText();
-				String confirmacao = pfConfirmacaoSenha.getText();
-				
 				UsuarioController controlador = new UsuarioController();
 				String mensagem = controlador.excluir((UsuarioVO) cbExcluirUsuarios.getSelectedItem());
 				
 				JOptionPane.showMessageDialog(null, mensagem);
+				
+				atualizarComboUsuarios();
 			}
 		});
 		
@@ -113,8 +110,8 @@ public class ExcluirUsuarioGUI {
 				
 				// passando valores para o controller, e conferindo se esta ok.
 				String email = txtEmail.getText();
-				String senha = pfSenha.getText();
-				String confirmacao = pfConfirmacaoSenha.getText();
+				String senha = new String(pfSenha.getPassword());
+				String confirmacao = new String(pfConfirmacaoSenha.getPassword());
 				// verificação
 				UsuarioController controller = new UsuarioController();
 				String mensagem = controller.consultarPermissao(email, senha, confirmacao);
@@ -133,9 +130,9 @@ public class ExcluirUsuarioGUI {
 		separator.setBounds(20, 121, 341, 2);
 		frmExcluirUsuarios.getContentPane().add(separator);
 		
-		btnExcluir.setBounds(140, 188, 156, 43);
+		btnExcluir.setBounds(117, 188, 156, 43);
 		frmExcluirUsuarios.getContentPane().add(btnExcluir);
-		btnConsultar.setBounds(79, 85, 145, 25);
+		btnConsultar.setBounds(67, 85, 145, 25);
 		frmExcluirUsuarios.getContentPane().add(btnConsultar);
 		
 		JButton btnLimpar = new JButton("Limpar");
@@ -148,16 +145,16 @@ public class ExcluirUsuarioGUI {
 		});
 		
 		cbExcluirUsuarios = new JComboBox(usuariosVO.toArray());
-		consultarUsuariosParaExclusao_ComboBox();
+		atualizarComboUsuarios();
 		cbExcluirUsuarios.setEnabled(false);
-		cbExcluirUsuarios.setBounds(79, 134, 300, 43);
+		cbExcluirUsuarios.setBounds(67, 134, 300, 43);
 		cbExcluirUsuarios.setSelectedIndex(-1);
 		frmExcluirUsuarios.getContentPane().add(cbExcluirUsuarios);
 		
-		btnLimpar.setBounds(234, 85, 145, 25);
+		btnLimpar.setBounds(222, 85, 145, 25);
 		frmExcluirUsuarios.getContentPane().add(btnLimpar);
 	}
-	private void consultarUsuariosParaExclusao_ComboBox() {
+	private void atualizarComboUsuarios() {
 		UsuarioController controller = new UsuarioController();
 		usuariosVO = controller.consultarTodos();
 		cbExcluirUsuarios.setModel(new DefaultComboBoxModel(usuariosVO.toArray()));
