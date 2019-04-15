@@ -1,12 +1,10 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.vo.NivelVO;
 import model.vo.UsuarioVO;
@@ -85,7 +83,6 @@ public class UsuarioDAO {
 				+ " AND UPPER(senha) = '" + senha.toUpperCase() + "' ";
 
 		try {
-			UsuarioVO userVO = null;
 			resultado = stmt.executeQuery(query);
 			if (resultado.next()) {
 				UsuarioVO usuario = obterUsuarioDoResultSet(resultado);
@@ -141,7 +138,6 @@ public class UsuarioDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		UsuarioVO userVO = null;
 		ArrayList<UsuarioVO> listagem = new ArrayList<UsuarioVO>();
 		try {
 			resultado = stmt.executeQuery(query);
@@ -173,7 +169,6 @@ public class UsuarioDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
-		UsuarioVO userVO = null;
 		ArrayList<UsuarioVO> usuarios = new ArrayList<UsuarioVO>();
 		try {
 			resultado = stmt.executeQuery(query);
