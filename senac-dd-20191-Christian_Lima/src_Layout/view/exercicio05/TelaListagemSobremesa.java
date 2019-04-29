@@ -1,4 +1,4 @@
-package main;
+package view.exercicio05;
 
 import java.awt.EventQueue;
 

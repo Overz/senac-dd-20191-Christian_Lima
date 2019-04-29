@@ -1,4 +1,4 @@
-package main;
+package view.exercicio05;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -93,6 +93,7 @@ public class TelaCadastroSobremesa_MigLayout extends JFrame {
 			}
 		});
 	}
+	
 
 	public TelaCadastroSobremesa_MigLayout() {
 		setTitle("Cadastro de nova sobremesa");
