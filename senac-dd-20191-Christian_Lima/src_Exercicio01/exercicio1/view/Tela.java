@@ -20,7 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import model.vo.Cidade;
-import model.vo.Cliente;
+import model.vo.Clientes;
 import model.vo.PessoaFisica;
 import model.vo.PessoaJuridica;
 
@@ -29,7 +29,7 @@ public class Tela {
 
 	//objetos
 	private Cidade cidade;
-	private Cliente cliente;
+	private Clientes clientes;
 	private PessoaJuridica pjuridica;
 	private PessoaFisica pfisica;
 	//variavel tela
@@ -137,9 +137,9 @@ public class Tela {
 		
 			// teste1
 			if (botaoPessoaFisica.isSelected()) {
-				cliente.setNome(textNome.getText());
+				clientes.setNome(textNome.getText());
 			} else if (botaoPessoaJuridica.isSelected()) {
-				cliente.setNome(textNome.getText());
+				clientes.setNome(textNome.getText());
 			}
 		
 		JLabel lblCpf = new JLabel("CPF/CNPJ:");
@@ -293,7 +293,7 @@ public class Tela {
 		
 		JComboBox<Object> saldoCliente = new JComboBox<Object>();
 		saldoCliente.setModel(new DefaultComboBoxModel<Object>(new String[] {"R$ 10,00", "R$ 20,00", "R$ 30,00", "R$ 50,00"}));
-		saldoCliente.setToolTipText("Selecione o Saldo do Cliente");
+		saldoCliente.setToolTipText("Selecione o Saldo do Clientes");
 		saldoCliente.setBounds(200, 388, 83, 23);
 		frmTelefonia.getContentPane().add(saldoCliente);
 		

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -15,17 +16,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaCliente extends JFrame{
 
 	private JDesktopPane desktopPane;
-	private JPanel panel;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					TelaCliente window = new TelaCliente();
+					window.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,17 +37,19 @@ public class TelaCliente extends JFrame{
 	}
 
 	public TelaCliente() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCliente.class.getResource("/icones/icons8-\u0441harlie-\u0441haplin.png")));
+		setTitle("Tela de Administrador");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 531, 412);
 		initialize();
 	}
 
 	private void initialize() {
-		setBounds(100, 100, 531, 412);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnCliente = new JMenu("Clientes");
+		JMenu mnCliente = new JMenu("Pessoa");
 		mnCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-fila.png")));
 		menuBar.add(mnCliente);
 
@@ -53,11 +57,11 @@ public class TelaCliente extends JFrame{
 		jmiCadastrarCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		jmiCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-adicionar-usu\u00E1rio-masculino.png")));
 		jmiCadastrarCliente.addActionListener(e -> {
-			
+
 			TelaInternaCadastroCliente janelinhaCadastroCliente = new TelaInternaCadastroCliente();
 			desktopPane.add(janelinhaCadastroCliente);
 			janelinhaCadastroCliente.show();
-			
+
 		});
 		mnCliente.add(jmiCadastrarCliente);
 
@@ -65,11 +69,11 @@ public class TelaCliente extends JFrame{
 		jmiAtualizarCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		jmiAtualizarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-confian\u00E7a.png")));
 		jmiAtualizarCliente.addActionListener(e -> {
-			
-			JInternalFrame frameAtualizarCliente = new JInternalFrame();
-			desktopPane.add(frameAtualizarCliente);
-			frameAtualizarCliente.setVisible(true);
-			frameAtualizarCliente.show();
+
+			TelaInternaAtualizarCliente janelinhaAtualizarCliente = new TelaInternaAtualizarCliente();
+			desktopPane.add(janelinhaAtualizarCliente);
+			janelinhaAtualizarCliente.setVisible(true);
+			janelinhaAtualizarCliente.show();
 
 		});
 		mnCliente.add(jmiAtualizarCliente);
@@ -78,12 +82,12 @@ public class TelaCliente extends JFrame{
 		jmiListarCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		jmiListarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-adicionar-ao-banco-de-dados.png")));
 		jmiListarCliente.addActionListener(e -> {
-			
+
 			JInternalFrame frameListarCliente = new JInternalFrame();
 			desktopPane.add(frameListarCliente);
 			frameListarCliente.setVisible(true);
 			frameListarCliente.show();
-			
+
 		});
 		mnCliente.add(jmiListarCliente);
 
@@ -112,7 +116,7 @@ public class TelaCliente extends JFrame{
 			desktopPane.add(frameAtualizarProduto);
 			frameAtualizarProduto.setVisible(true);
 			frameAtualizarProduto.show();
-			
+
 		});
 		mnProduto.add(jmiAtualizarProduto);
 
@@ -120,7 +124,7 @@ public class TelaCliente extends JFrame{
 		jmiListarProduto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.CTRL_MASK));
 		jmiListarProduto.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-adicionar-ao-banco-de-dados.png")));
 		jmiListarProduto.addActionListener(e -> {
-			
+
 			JInternalFrame frameListarProduto = new JInternalFrame();
 			desktopPane.add(frameListarProduto);
 			frameListarProduto.setVisible(true);
@@ -137,7 +141,7 @@ public class TelaCliente extends JFrame{
 		jmiCadastrarFuncionario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, InputEvent.SHIFT_MASK));
 		jmiCadastrarFuncionario.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-adicionar-usu\u00E1rio-masculino.png")));
 		jmiCadastrarFuncionario.addActionListener(e -> {
-			
+
 			JInternalFrame frameCadastrarFuncionarios = new JInternalFrame();
 			desktopPane.add(frameCadastrarFuncionarios);
 			frameCadastrarFuncionarios.setVisible(true);
@@ -150,7 +154,7 @@ public class TelaCliente extends JFrame{
 		jmiAtualizarFuncionario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, InputEvent.SHIFT_MASK));
 		jmiAtualizarFuncionario.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-confian\u00E7a.png")));
 		jmiAtualizarFuncionario.addActionListener(e -> {
-			
+
 			JInternalFrame frameAtualizarFuncionario = new JInternalFrame();
 			desktopPane.add(frameAtualizarFuncionario);
 			frameAtualizarFuncionario.setVisible(true);
@@ -163,7 +167,7 @@ public class TelaCliente extends JFrame{
 		jmiListarFuncionario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_MASK));
 		jmiListarFuncionario.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/icons8-adicionar-ao-banco-de-dados.png")));
 		jmiListarFuncionario.addActionListener(e -> {
-			
+
 			JInternalFrame frameListarFuncionario = new JInternalFrame();
 			desktopPane.add(frameListarFuncionario);
 			frameListarFuncionario.setVisible(true);
@@ -179,19 +183,16 @@ public class TelaCliente extends JFrame{
 
 		});
 		menuBar.add(jmiSobre);
-		
+
 		//TODO testar outros layouts
 		getContentPane().setLayout(null);
-		
+
 		desktopPane = new JDesktopPane();
 		desktopPane.setBounds(0, 0, 1560, 294);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		desktopPane.setBounds(10, 10, screenSize.width - 40, screenSize.height - 150);
-		
+
 		setContentPane(desktopPane);
-		
-		panel = new JPanel();
-		panel.setBounds(0, 0, 515, 315);
-		desktopPane.add(panel);
+		desktopPane.setLayout(new MigLayout("", "[grow,fill]", "[grow,fill]"));
 	}
 }

@@ -1,6 +1,6 @@
 package model.vo;
 
-public class PessoaFisica extends Cliente {
+public class PessoaFisica extends Clientes {
 	
 	
 	private String cpf;

@@ -2,7 +2,7 @@ package model.vo;
 
 import java.util.Date;
 
-public abstract class Cliente {
+public abstract class Clientes {
 
 	private String nome;
 	private Date dataNascimento;
@@ -37,6 +37,4 @@ public abstract class Cliente {
 	public double getSaldo() {
 		return saldo;
 	}
-	
-	
 }
