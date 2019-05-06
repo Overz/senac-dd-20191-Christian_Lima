@@ -1,29 +1,30 @@
 package view.exercicio06.cliente;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import javax.swing.JFormattedTextField;
-import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import net.miginfocom.swing.MigLayout;
 
 public class TelaInternaCadastroCliente extends JInternalFrame {
 
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
-	private JFormattedTextField ftfCPF_CNPJ;
+	private JFormattedTextField ftfCPF;
+	private JFormattedTextField ftfCNPJ;
 
 	private MaskFormatter mascaraCpf;
 	private MaskFormatter mascaraCnpj;
@@ -59,6 +60,15 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 	}
 
 	private void initialize() {
+		
+		try {
+			mascaraCpf = new MaskFormatter("###.###.###-##");
+			mascaraCnpj = new MaskFormatter("##.###.###/####-##");
+			mascaraData = new MaskFormatter("##/##/####");
+			mascaraTelefone = new MaskFormatter("(##)####-####");
+		} catch (ParseException e) {
+			System.out.println("Erro ao criar máscaras. Causa: " + e.getMessage());
+		}
 
 		JLabel lblInformaesPessoais = new JLabel("Informa\u00E7\u00F5es Pessoais");
 		lblInformaesPessoais.setFont(new Font("Verdana", Font.PLAIN, 14));
@@ -139,7 +149,17 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 		txtEmail.setColumns(10);
 
 		JRadioButton rbCNPJ = new JRadioButton("CPNJ");
+		rbCNPJ.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				selecionarCNPJ();
+			}
+		});
 		JRadioButton rbCPF = new JRadioButton("CPF");
+		rbCPF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				selecionarCPF();
+			}
+		});
 		getContentPane().add(rbCNPJ, "cell 1 3,alignx center,aligny top");
 		getContentPane().add(rbCPF, "cell 0 3,alignx right,aligny top");
 
@@ -147,10 +167,13 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 		group.add(rbCNPJ);
 		group.add(rbCPF);
 
-		// Erro ao tentar criar este campo na tela, junto com o try/catch, não funciona os If's
-		ftfCPF_CNPJ = new JFormattedTextField(mascaraCpf);
-		getContentPane().add(ftfCPF_CNPJ, "cell 1 4,growx,aligny top");
-		ftfCPF_CNPJ.setEnabled(false);
+		ftfCPF = new JFormattedTextField(mascaraCpf);
+		getContentPane().add(ftfCPF, "cell 1 4,growx,aligny top");
+		ftfCPF.setVisible(false);
+		
+		ftfCNPJ = new JFormattedTextField(mascaraCnpj);
+		getContentPane().add(ftfCNPJ, "cell 1 4,growx,aligny top");
+		ftfCNPJ.setVisible(false);
 
 		JFormattedTextField ftfData = new JFormattedTextField(mascaraData);
 		getContentPane().add(ftfData, "cell 3 4,growx,aligny top");
@@ -171,7 +194,14 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 			// Info Pessoal
 			txtNome.setText("");
 			txtSobrenome.setText("");
-			ftfCPF_CNPJ.setText("");
+			ftfCPF.setText("");
+			ftfCNPJ.setText("");
+			ftfCPF.setVisible(false);
+			ftfCNPJ.setVisible(false);
+			
+			rbCPF.setSelected(false);
+			rbCNPJ.setSelected(false);
+			
 			ftfData.setText("");
 			// Endereço
 			txtCidade.setText("");
@@ -185,29 +215,7 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 			
 		});
 
-		try {
-			mascaraCpf = new MaskFormatter("###.###.###-##");
-			mascaraCnpj = new MaskFormatter("##.###.###/####-##");
-			mascaraData = new MaskFormatter("##/##/####");
-			mascaraTelefone = new MaskFormatter("(##)####-####");
-
-			if (rbCPF.isSelected()) {
-				ftfCPF_CNPJ = new JFormattedTextField(mascaraCpf);
-				getContentPane().add(ftfCPF_CNPJ, "cell 1 3,grow");
-				ftfCPF_CNPJ.setEnabled(true);
-				ftfCPF_CNPJ.setText("");
-
-			} else {
-				ftfCPF_CNPJ = new JFormattedTextField(mascaraCnpj);
-				getContentPane().add(ftfCPF_CNPJ, "cell 1 3,grow");
-				ftfCPF_CNPJ.setEnabled(true);
-				ftfCPF_CNPJ.setText("");
-			}
-		} catch (Exception e) {
-			e.getMessage();
-			System.out.println(e);
-			System.out.println("1º Try/Catch");
-		}
+		
 
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/aaaa");
@@ -215,7 +223,19 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 		} catch (ParseException e) {
 			e.getMessage();
 			System.out.println(e);
-			System.out.println("2º Try/Catch");
+			System.out.println("2º Try/Catch. Causa: " + e.getMessage() );
 		}
+	}
+
+	protected void selecionarCPF() {
+		ftfCPF.setVisible(true);
+		ftfCNPJ.setText("");
+		ftfCNPJ.setVisible(false);
+	}
+
+	protected void selecionarCNPJ() {
+		ftfCPF.setVisible(false);
+		ftfCPF.setText("");
+		ftfCNPJ.setVisible(true);
 	}
 }

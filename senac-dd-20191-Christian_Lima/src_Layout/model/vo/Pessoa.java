@@ -6,27 +6,23 @@ public abstract class Pessoa {
 	
 	private int id;
 	private String nome;
-	private String Sobrenome;
+	private String sobrenome;
 	private String cpf_cnpj;
 	private Date dtNascimento;
-	private String cidade;
-	private String bairro;
-	private String rua;
+	private Endereco endereco;
 	private int numero;
 	private String complemento;
 	
 	public Pessoa(int id, String nome, String sobrenome, String cpf_cnpj, Date dtNascimento, String cidade,
-			String bairro, String rua, int numero, String complemento) {
+			Endereco endereco, String complemento) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		Sobrenome = sobrenome;
+		this.sobrenome = sobrenome;
 		this.cpf_cnpj = cpf_cnpj;
 		this.dtNascimento = dtNascimento;
-		this.cidade = cidade;
-		this.bairro = bairro;
-		this.rua = rua;
 		this.numero = numero;
+		this.endereco = endereco;
 		this.complemento = complemento;
 	}
 	
@@ -47,10 +43,10 @@ public abstract class Pessoa {
 		this.nome = nome;
 	}
 	public String getSobrenome() {
-		return Sobrenome;
+		return sobrenome;
 	}
 	public void setSobrenome(String sobrenome) {
-		Sobrenome = sobrenome;
+		sobrenome = sobrenome;
 	}
 	public String getCpf_cnpj() {
 		return cpf_cnpj;
@@ -63,24 +59,6 @@ public abstract class Pessoa {
 	}
 	public void setDtNascimento(Date dtNascimento) {
 		this.dtNascimento = dtNascimento;
-	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-	public String getBairro() {
-		return bairro;
-	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	public String getRua() {
-		return rua;
-	}
-	public void setRua(String rua) {
-		this.rua = rua;
 	}
 	public int getNumero() {
 		return numero;
@@ -102,10 +80,16 @@ public abstract class Pessoa {
 				+ "\nNome: " + getNome() + " " + getSobrenome()
 				+ "\nCPF/CNPJ: " + this.getCpf_cnpj()
 				+ "\nData de Nascimento: " + this.getDtNascimento()
-				+ "\nCidade: " + this.getCidade()
-				+ "\nBairro: " + this.getBairro()
-				+ "\nRua: " + this.getRua()
+				+ "\nEndereço: " + this.getEndereco().toString()
 				+ "\nNº: " + this.getNumero()
 				+ "\nComplemento: " + this.getComplemento();
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 }
