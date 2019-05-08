@@ -19,9 +19,9 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import net.miginfocom.swing.MigLayout;
+import view.exercicio06.cliente.PainelListagemCliente;
 import view.exercicio06.cliente.TelaInternaAtualizarCliente;
 import view.exercicio06.cliente.TelaInternaCadastroCliente;
-import view.exercicio06.cliente.TelaInternaListagemCliente;
 import view.exercicio06.cliente.TelaInternaRelatorioCliente;
 
 public class TelaPrincipal extends JFrame{
@@ -29,7 +29,7 @@ public class TelaPrincipal extends JFrame{
 	private JDesktopPane desktopPane;
 	private TelaInternaCadastroCliente janelinhaCadastroCliente;
 	private TelaInternaAtualizarCliente janelinhaAtualizarCliente;
-	private TelaInternaListagemCliente janelinhaListagemCliente;
+	private PainelListagemCliente painelListagemCliente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,8 +57,6 @@ public class TelaPrincipal extends JFrame{
 		//Fechando JInternalFrame/Proibir outra janela interna
 		janelinhaCadastroCliente = null;
 		janelinhaAtualizarCliente = null;
-		janelinhaListagemCliente = null;
-
 	}
 
 	public void fechar() {
@@ -126,28 +124,14 @@ public class TelaPrincipal extends JFrame{
 		JMenuItem mntmListar = new JMenuItem("Listar");
 		mntmListar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
 		mntmListar.addActionListener(e -> {
-			janelinhaListagemCliente = new TelaInternaListagemCliente();
-			desktopPane.add(janelinhaListagemCliente);
-			janelinhaListagemCliente.setVisible(true);
-			janelinhaListagemCliente.show();
-
-			if (janelinhaListagemCliente == null) {
-				janelinhaListagemCliente = new TelaInternaListagemCliente();
-				desktopPane.add(janelinhaListagemCliente);
-				janelinhaListagemCliente.show();
-			} else {
-				fechar();
+			if (painelListagemCliente == null) {
+				painelListagemCliente = new PainelListagemCliente();
+				getContentPane().add(painelListagemCliente);
+				painelListagemCliente.setVisible(true);
+				painelListagemCliente.show();
+			}else {
+				painelListagemCliente.setVisible(true);
 			}
-
-
-			//Fechando JInternalFrame
-			janelinhaAtualizarCliente.addInternalFrameListener(new InternalFrameAdapter() {
-				@Override
-				public void internalFrameClosed(InternalFrameEvent arg0) {
-					fecharJanelinhas();
-				}
-			});
-
 		});
 		mntmListar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-card\u00E1pio.png")));
 		mnCliente.add(mntmListar);

@@ -1,26 +1,23 @@
 package view.exercicio06.cliente;
 
-import java.awt.EventQueue;
-
-import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JButton;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class TelaInternaListagemCliente extends JPanel{
+public class PainelListagemCliente extends JPanel{
+
 	private JTextField txtNome;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtCPF_CPNPJ;
+	private JTextField txtDtNascimento;
 	private JTable table;
 	private JButton btnFechar;
 	
-	public TelaInternaListagemCliente() {
+	public PainelListagemCliente() {
 		setBounds(100, 100, 450, 341);
 		setLayout(new MigLayout("", "[81px][10px][166px][10px][106px][10px][191px]", "[24px][21px][33px][313px,grow,fill]"));
 		
@@ -34,23 +31,23 @@ public class TelaInternaListagemCliente extends JPanel{
 		JLabel lblCpfcnpj = new JLabel("CPF/CNPJ:");
 		add(lblCpfcnpj, "cell 0 1,grow");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		add(textField, "cell 2 1,grow");
+		txtCPF_CPNPJ = new JTextField();
+		txtCPF_CPNPJ.setColumns(10);
+		add(txtCPF_CPNPJ, "cell 2 1,grow");
 		
 		JLabel lblDtNascimento = new JLabel("Dt. Nascimento:");
 		add(lblDtNascimento, "cell 4 0,grow");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		add(textField_1, "cell 6 0,grow");
+		txtDtNascimento = new JTextField();
+		txtDtNascimento.setColumns(10);
+		add(txtDtNascimento, "cell 6 0,grow");
 		
 		Object[][] data = new Object[][] {{"#", "Nome", "CPF", "Email", "Telefone"},};
 		Object[] columnNames = new String[] {"#", "Nome", "CPF", "Email", "Telefone"};
 		
 		btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(e -> {
-			System.exit(0);
+			this.setVisible(false);
 		});
 		add(btnFechar, "cell 6 2,grow");
 
