@@ -83,7 +83,7 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 		chkbApagarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (chkbApagarCliente.isSelected()) {
-					JOptionPane.showMessageDialog(null, "Atenção, Cuidado ao apagar um Clientes!\nIsso pode Causar Problemas!");
+					JOptionPane.showMessageDialog(null, "Atenção, Cuidado ao apagar um Cliente!\nIsso pode gerar Problemas!");
 					btnApagar.setEnabled(true);
 				}
 				
