@@ -2,25 +2,20 @@ package view.exercicio06.cliente;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
-
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import model.vo.Pessoa;
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTable;
-import javax.swing.JCheckBox;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaInternaAtualizarCliente extends JInternalFrame{
 
@@ -85,12 +80,18 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 		tableClientes.setModel(new DefaultTableModel(data, columnNames));
 		
 		JCheckBox chkbApagarCliente = new JCheckBox("Apagar Clientes");
+		chkbApagarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chkbApagarCliente.isSelected()) {
+					JOptionPane.showMessageDialog(null, "Atenção, Cuidado ao apagar um Clientes!\nIsso pode Causar Problemas!");
+					btnApagar.setEnabled(true);
+				}
+				
+			}
+		});
 		getContentPane().add(chkbApagarCliente, "cell 1 4,grow");
 		
-		if (chkbApagarCliente.isSelected()) {
-			JOptionPane.showMessageDialog(null, "Atenção, Cuidado ao apagar um Clientes!\nIsso pode Causar Problemas!");
-			btnApagar.setEnabled(true);
-		}
+		
 		
 		btnApagar = new JButton("APAGAR");
 		btnApagar.addActionListener(e -> {
