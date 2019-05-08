@@ -53,6 +53,7 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 
 	public TelaInternaCadastroCliente() {
 		setClosable(true);
+		setResizable(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 527, 380);
 		getContentPane().setLayout(new MigLayout("", "[61.00px][102px,grow][97px][130px,grow]", "[25.00,grow][13.00,grow][20px,grow][20px,grow][20.00,grow][13.00,grow][25.00,grow][13.00,grow][20px,grow][20px,grow][20px,grow][13.00,grow][25.00,grow][20px,grow][13.00][20px,grow]"));
@@ -214,8 +215,6 @@ public class TelaInternaCadastroCliente extends JInternalFrame {
 			txtEmail.setText("");
 			
 		});
-
-		
 
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/aaaa");

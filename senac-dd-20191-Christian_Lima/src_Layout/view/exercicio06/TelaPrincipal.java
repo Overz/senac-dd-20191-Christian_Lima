@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -20,12 +21,15 @@ import javax.swing.event.InternalFrameEvent;
 import net.miginfocom.swing.MigLayout;
 import view.exercicio06.cliente.TelaInternaAtualizarCliente;
 import view.exercicio06.cliente.TelaInternaCadastroCliente;
+import view.exercicio06.cliente.TelaInternaListagemCliente;
 import view.exercicio06.cliente.TelaInternaRelatorioCliente;
 
 public class TelaPrincipal extends JFrame{
 
 	private JDesktopPane desktopPane;
-	private TelaInternaCadastroCliente janelinhaCadastroCliente; 
+	private TelaInternaCadastroCliente janelinhaCadastroCliente;
+	private TelaInternaAtualizarCliente janelinhaAtualizarCliente;
+	private TelaInternaListagemCliente janelinhaListagemCliente;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,10 +52,19 @@ public class TelaPrincipal extends JFrame{
 		setBounds(100, 100, 531, 412);
 		initialize();
 	}
-	
-	public void fecharJanelinhaCadastroCliente() {
-		//Fechando JInternalFrame
+
+	public void fecharJanelinhas() {
+		//Fechando JInternalFrame/Proibir outra janela interna
 		janelinhaCadastroCliente = null;
+		janelinhaAtualizarCliente = null;
+		janelinhaListagemCliente = null;
+
+	}
+
+	public void fechar() {
+
+		WindowEvent fechar = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(fechar);
 	}
 
 	private void initialize() {
@@ -67,17 +80,17 @@ public class TelaPrincipal extends JFrame{
 		jmiCadastrarCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		jmiCadastrarCliente.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-adicionar-usu\u00E1rio-masculino.png")));
 		jmiCadastrarCliente.addActionListener(e -> {
-
+			//Fechando JInternalFrame/Proibir outra janela interna
 			if(janelinhaCadastroCliente == null) {
 				janelinhaCadastroCliente = new TelaInternaCadastroCliente();
 				desktopPane.add(janelinhaCadastroCliente);
 				janelinhaCadastroCliente.show();
 			}
-			//Fechando JInternalFrame
+			//Fechando JInternalFrame/Proibir outra janela interna
 			janelinhaCadastroCliente.addInternalFrameListener(new InternalFrameAdapter() {
 				@Override
 				public void internalFrameClosed(InternalFrameEvent arg0) {
-					fecharJanelinhaCadastroCliente();
+					fecharJanelinhas();
 				}
 			});
 
@@ -89,16 +102,58 @@ public class TelaPrincipal extends JFrame{
 		jmiAtualizarCliente.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-confian\u00E7a.png")));
 		jmiAtualizarCliente.addActionListener(e -> {
 
-			TelaInternaAtualizarCliente janelinhaAtualizarCliente = new TelaInternaAtualizarCliente();
+			janelinhaAtualizarCliente = new TelaInternaAtualizarCliente();
 			desktopPane.add(janelinhaAtualizarCliente);
 			janelinhaAtualizarCliente.setVisible(true);
 			janelinhaAtualizarCliente.show();
 
+			if(janelinhaAtualizarCliente == null) {
+				janelinhaAtualizarCliente = new TelaInternaAtualizarCliente();
+				desktopPane.add(janelinhaAtualizarCliente);
+				janelinhaAtualizarCliente.show();
+			}
+			//Fechando JInternalFrame
+			janelinhaAtualizarCliente.addInternalFrameListener(new InternalFrameAdapter() {
+				@Override
+				public void internalFrameClosed(InternalFrameEvent arg0) {
+					fecharJanelinhas();
+				}
+			});
+
 		});
 		mnCliente.add(jmiAtualizarCliente);
 
+		JMenuItem mntmListar = new JMenuItem("Listar");
+		mntmListar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+		mntmListar.addActionListener(e -> {
+			janelinhaListagemCliente = new TelaInternaListagemCliente();
+			desktopPane.add(janelinhaListagemCliente);
+			janelinhaListagemCliente.setVisible(true);
+			janelinhaListagemCliente.show();
+
+			if (janelinhaListagemCliente == null) {
+				janelinhaListagemCliente = new TelaInternaListagemCliente();
+				desktopPane.add(janelinhaListagemCliente);
+				janelinhaListagemCliente.show();
+			} else {
+				fechar();
+			}
+
+
+			//Fechando JInternalFrame
+			janelinhaAtualizarCliente.addInternalFrameListener(new InternalFrameAdapter() {
+				@Override
+				public void internalFrameClosed(InternalFrameEvent arg0) {
+					fecharJanelinhas();
+				}
+			});
+
+		});
+		mntmListar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-card\u00E1pio.png")));
+		mnCliente.add(mntmListar);
+
 		JMenuItem jmiRelatorioCliente = new JMenuItem("Relatorio");
-		jmiRelatorioCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+		jmiRelatorioCliente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0));
 		jmiRelatorioCliente.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-adicionar-ao-banco-de-dados.png")));
 		jmiRelatorioCliente.addActionListener(e -> {
 
@@ -109,14 +164,6 @@ public class TelaPrincipal extends JFrame{
 
 		});
 		mnCliente.add(jmiRelatorioCliente);
-		
-		JMenuItem mntmListar = new JMenuItem("Listar");
-		mntmListar.addActionListener(e -> {
-			
-
-		});
-		mntmListar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-card\u00E1pio.png")));
-		mnCliente.add(mntmListar);
 
 		JMenu mnProduto = new JMenu("Produtos");
 		mnProduto.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/icones/icons8-comprar.png")));
@@ -210,7 +257,7 @@ public class TelaPrincipal extends JFrame{
 
 		});
 		menuBar.add(jmiSobre);
-		
+
 		JMenu mnData = new JMenu("Data");
 		menuBar.add(mnData);
 

@@ -42,9 +42,10 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 	}
 
 	public TelaInternaAtualizarCliente() {
-		setBounds(100, 100, 482, 403);
-		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setClosable(true);
+		setResizable(true);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 482, 403);
 		getContentPane().setLayout(new MigLayout("", "[60.00px][grow][grow][79px]", "[29.00px][29.00][40.00][grow][fill]"));
 		initialize();
 	}
@@ -76,8 +77,8 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 		JButton btnPesquisarTodos = new JButton("Pesquisar Todos");
 		getContentPane().add(btnPesquisarTodos, "cell 3 2,grow");
 		
-		Object[][] data = new Object[][] {{"Nome", "CPF", "Email", "Telefone"},};
-		Object[] columnNames = new String[] {"Nome", "CPF", "Email", "Telefone"};
+		Object[][] data = new Object[][] {{"#", "Nome", "CPF", "Email", "Telefone"},};
+		Object[] columnNames = new String[] {"#", "Nome", "CPF", "Email", "Telefone"};
 		
 		tableClientes = new JTable();
 		getContentPane().add(tableClientes, "cell 0 3 4 1,grow");
