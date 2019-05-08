@@ -38,4 +38,9 @@ public class Endereco {
 	public void setRua(String rua) {
 		this.rua = rua;
 	}
+	@Override
+	public String toString() {
+		return "Endereco [id=" + id + ", cidade=" + cidade + ", bairro=" + bairro + ", rua=" + rua + "]";
+	}
+	
 }

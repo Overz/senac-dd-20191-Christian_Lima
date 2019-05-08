@@ -13,62 +13,80 @@ public abstract class Pessoa {
 	private int numero;
 	private String complemento;
 	
-	public Pessoa(int id, String nome, String sobrenome, String cpf_cnpj, Date dtNascimento, String cidade,
-			Endereco endereco, String complemento) {
+	public Pessoa(int id, String nome, String sobrenome, String cpf_cnpj, Date dtNascimento, Endereco endereco,
+			int numero, String complemento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf_cnpj = cpf_cnpj;
 		this.dtNascimento = dtNascimento;
-		this.numero = numero;
 		this.endereco = endereco;
+		this.numero = numero;
 		this.complemento = complemento;
-	}
-	
-	public Pessoa() {
-		super();
 	}
 
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
+
 	public void setSobrenome(String sobrenome) {
-		sobrenome = sobrenome;
+		this.sobrenome = sobrenome;
 	}
+
 	public String getCpf_cnpj() {
 		return cpf_cnpj;
 	}
+
 	public void setCpf_cnpj(String cpf_cnpj) {
 		this.cpf_cnpj = cpf_cnpj;
 	}
+
 	public Date getDtNascimento() {
 		return dtNascimento;
 	}
+
 	public void setDtNascimento(Date dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public int getNumero() {
 		return numero;
 	}
+
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+
 	public String getComplemento() {
 		return complemento;
 	}
+
+
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
@@ -85,11 +103,4 @@ public abstract class Pessoa {
 				+ "\nComplemento: " + this.getComplemento();
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
 }

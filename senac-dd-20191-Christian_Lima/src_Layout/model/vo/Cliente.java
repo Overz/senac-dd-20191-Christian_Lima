@@ -6,19 +6,9 @@ public abstract class Cliente extends Pessoa{
 
 	private String razaoSocial;
 
-	public Cliente(int id,
-				String nome,
-				String sobrenome,
-				String cpf_cnpj,
-				Date dtNascimento,
-				String cidade,
-				String bairro,
-				String rua,
-				int numero,
-				String complemento,
-				String razaoSocial) {
-		super(id, nome, sobrenome, cpf_cnpj, dtNascimento, cidade, bairro, rua, numero, complemento);
-		
+	public Cliente(int id, String nome, String sobrenome, String cpf_cnpj, Date dtNascimento, Endereco endereco,
+			int numero, String complemento, String razaoSocial) {
+		super(id, nome, sobrenome, cpf_cnpj, dtNascimento, endereco, numero, complemento);
 		this.razaoSocial = razaoSocial;
 	}
 

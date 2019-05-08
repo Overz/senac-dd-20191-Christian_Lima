@@ -8,21 +8,9 @@ public abstract class Funcionario extends Pessoa{
 	private String numeroContrato;
 	private double salario;
 	
-	public Funcionario(int id,
-					String nome,
-					String sobrenome,
-					String cpf_cnpj,
-					Date dtNascimento,
-					String cidade,
-					String bairro,
-					String rua,
-					int numero,
-					String complemento,
-					String setor,
-					String numeroContrato,
-					double salario) {
-		super(id, nome, sobrenome, cpf_cnpj, dtNascimento, cidade, bairro, rua, numero, complemento);
-		
+	public Funcionario(int id, String nome, String sobrenome, String cpf_cnpj, Date dtNascimento, Endereco endereco,
+			int numero, String complemento, String setor, String numeroContrato, double salario) {
+		super(id, nome, sobrenome, cpf_cnpj, dtNascimento, endereco, numero, complemento);
 		this.setor = setor;
 		this.numeroContrato = numeroContrato;
 		this.salario = salario;
