@@ -85,7 +85,7 @@ public class TelaListagemProdutos extends JFrame {
 		contentPane.setLayout(null);
 
 		String[] cores = { "---Selecione---", TelaListagemProdutos.COR_AZUL, TelaListagemProdutos.COR_AMARELO,
-		TelaListagemProdutos.COR_PRETO, TelaListagemProdutos.COR_VERDE, TelaListagemProdutos.COR_VERMELHO };
+				TelaListagemProdutos.COR_PRETO, TelaListagemProdutos.COR_VERDE, TelaListagemProdutos.COR_VERMELHO };
 
 		JLabel lblFiltrosDeConsulta = new JLabel("Filtros de consulta:");
 		lblFiltrosDeConsulta.setHorizontalAlignment(SwingConstants.CENTER);
@@ -116,11 +116,13 @@ public class TelaListagemProdutos extends JFrame {
 		lblDataFimCadastro.setBounds(10, 170, 61, 16);
 		contentPane.add(lblDataFimCadastro);
 
+		
 		lblPaginaAtual = new JLabel("");
 		lblPaginaAtual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPaginaAtual.setBounds(194, 461, 54, 14);
-		lblPaginaAtual.setText(paginaAtual + " / " );
+		lblPaginaAtual.setText(" / ");
 		contentPane.add(lblPaginaAtual);
+		
 
 		txtNome = new JTextField();
 		txtNome.setBounds(80, 35, 160, 30);
@@ -155,8 +157,6 @@ public class TelaListagemProdutos extends JFrame {
 		btnGerarXls.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
-				
-				
 				
 				
 				
@@ -205,13 +205,12 @@ public class TelaListagemProdutos extends JFrame {
 		tblProdutos = new JTable();
 		tblProdutos.setBounds(10, 259, 444, 174);
 		tblProdutos.setModel(new DefaultTableModel(new String[][] {
-							 { "#", "Nome", "Marca", "Peso", "Dt. Cadastro" },},
+			{ "#", "Nome", "Marca", "Peso", "Dt. Cadastro" },},
 				new String[] { "#", "Nome", "Marca", "Peso", "Dt. Cadastro" }));
 		contentPane.add(tblProdutos);
 	}
 
 	protected void consultarProdutos() {
-		lblPaginaAtual.setText(paginaAtual + " / " + totalPaginas);
 
 		ProdutoController controlador = new ProdutoController();
 		seletor = new ProdutoSeletor();
@@ -242,10 +241,12 @@ public class TelaListagemProdutos extends JFrame {
 	}
 
 	private void atualizarTotalPaginas(int totalProdutos) {
-		
-		int resto = (totalPaginas % TAMANHO_PAGINA);
-		int quociente = (totalPaginas / TAMANHO_PAGINA); // igual
+
+		int resto = (totalProdutos % TAMANHO_PAGINA);
+		int quociente = (totalProdutos / TAMANHO_PAGINA);
 		totalPaginas = quociente + (resto > 0 ? 1 : 0);
+		
+		lblPaginaAtual.setText(paginaAtual + " / " + totalPaginas);
 	}
 
 	protected void atualizarTabelaProdutos(List<Produto> produtos) {
@@ -281,6 +282,12 @@ public class TelaListagemProdutos extends JFrame {
 			btnAnterior.setEnabled(false);	
 		} else if (paginaAtual > 1) {
 			btnAnterior.setEnabled(true);
+		}
+
+		if (paginaAtual < totalPaginas) {
+			btnProximo.setEnabled(true);
+		} else {
+			btnProximo.setEnabled(false);
 		}
 	}
 }

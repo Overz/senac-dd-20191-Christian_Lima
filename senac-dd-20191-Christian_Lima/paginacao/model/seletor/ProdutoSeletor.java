@@ -17,12 +17,11 @@ public class ProdutoSeletor {
 	//Atributos para possível paginação dos resultados (intervalo)
 	private int limite;
 	private int pagina;
-	private int totalPaginas;
 	
 	public ProdutoSeletor() {
 		//Default: traz os resultados sem limite e sem página
 		this.limite = 0;
-		this.pagina = -1;
+		this.pagina = -2;
 	}
 	
 	/**
