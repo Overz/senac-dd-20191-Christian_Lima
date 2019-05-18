@@ -24,6 +24,7 @@ import layouts.view.exercicio06.clientes.PainelListagemCliente;
 import layouts.view.exercicio06.clientes.TelaInternaAtualizarCliente;
 import layouts.view.exercicio06.clientes.TelaInternaCadastroCliente;
 import layouts.view.exercicio06.clientes.TelaInternaRelatorioCliente;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaPrincipal extends JFrame {
 

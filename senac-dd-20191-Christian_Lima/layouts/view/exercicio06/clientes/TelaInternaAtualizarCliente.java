@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
+import net.miginfocom.swing.MigLayout;
+
 public class TelaInternaAtualizarCliente extends JInternalFrame{
 
 	private JTextField textField;

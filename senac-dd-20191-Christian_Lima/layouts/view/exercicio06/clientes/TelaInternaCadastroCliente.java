@@ -17,6 +17,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import net.miginfocom.swing.MigLayout;
+
 public class TelaInternaCadastroCliente extends JInternalFrame {
 
 	private JTextField txtNome;
