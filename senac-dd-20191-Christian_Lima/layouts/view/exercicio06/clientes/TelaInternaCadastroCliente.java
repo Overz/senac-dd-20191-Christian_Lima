@@ -1,4 +1,4 @@
-package layouts.view.exercicio06.cliente;
+package layouts.view.exercicio06.clientes;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -16,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-
-import net.miginfocom.swing.MigLayout;
 
 public class TelaInternaCadastroCliente extends JInternalFrame {
 

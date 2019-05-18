@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaListagemSobremesa {
@@ -39,7 +40,7 @@ public class TelaListagemSobremesa {
 		frmConsultaDeSobremesas = new JFrame();
 		frmConsultaDeSobremesas.setTitle("Consulta de sobremesas");
 		frmConsultaDeSobremesas.setBounds(100, 100, 520, 343);
-		frmConsultaDeSobremesas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmConsultaDeSobremesas.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {

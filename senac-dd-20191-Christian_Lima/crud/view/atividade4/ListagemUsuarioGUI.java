@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import crud.controller.UsuarioController;
@@ -50,7 +51,7 @@ public class ListagemUsuarioGUI {
 		frmListarUsuarios = new JFrame();
 		frmListarUsuarios.setTitle("Consulta de usuários");
 		frmListarUsuarios.setBounds(100, 100, 585, 405);
-		frmListarUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmListarUsuarios.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frmListarUsuarios.getContentPane().setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");

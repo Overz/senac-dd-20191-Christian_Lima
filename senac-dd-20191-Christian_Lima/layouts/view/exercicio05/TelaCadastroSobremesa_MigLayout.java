@@ -10,9 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-
-import net.miginfocom.swing.MigLayout;
 
 
 
@@ -97,7 +96,7 @@ public class TelaCadastroSobremesa_MigLayout extends JFrame {
 
 	public TelaCadastroSobremesa_MigLayout() {
 		setTitle("Cadastro de nova sobremesa");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 314, 201);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

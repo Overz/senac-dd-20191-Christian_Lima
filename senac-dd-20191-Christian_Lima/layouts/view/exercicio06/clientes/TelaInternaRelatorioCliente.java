@@ -1,9 +1,10 @@
-package layouts.view.exercicio06.cliente;
+package layouts.view.exercicio06.clientes;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.WindowConstants;
 
 public class TelaInternaRelatorioCliente extends JInternalFrame{
 
@@ -29,7 +30,7 @@ public class TelaInternaRelatorioCliente extends JInternalFrame{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 }

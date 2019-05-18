@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import crud.controller.UsuarioController;
 import crud.model.vo.NivelVO;
@@ -56,7 +57,7 @@ public class CadastroUsuarioGUI {
 		frmCadastroDeUsuarios = new JFrame();
 		frmCadastroDeUsuarios.setTitle("Cadastro de usuários");
 		frmCadastroDeUsuarios.setBounds(100, 100, 365, 233);
-		frmCadastroDeUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCadastroDeUsuarios.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frmCadastroDeUsuarios.getContentPane().setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome:");

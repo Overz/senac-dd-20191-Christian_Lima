@@ -1,4 +1,4 @@
-package layouts.view.exercicio06.cliente;
+package layouts.view.exercicio06.clientes;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -13,9 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-
-import net.miginfocom.swing.MigLayout;
 
 public class TelaInternaAtualizarCliente extends JInternalFrame{
 
@@ -39,7 +38,7 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 	public TelaInternaAtualizarCliente() {
 		setClosable(true);
 		setResizable(true);
-		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 482, 403);
 		getContentPane().setLayout(new MigLayout("", "[60.00px][grow][grow][79px]", "[29.00px][29.00][40.00][grow][fill]"));
 		initialize();
@@ -103,6 +102,7 @@ public class TelaInternaAtualizarCliente extends JInternalFrame{
 		
 	}
 	
+	@Override
 	public Dimension getPreferredSize() {
         return new Dimension(500, 500);
     }

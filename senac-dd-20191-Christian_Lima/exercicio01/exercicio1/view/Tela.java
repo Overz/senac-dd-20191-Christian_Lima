@@ -18,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import exercicio01.model.vo.Cidade;
 import exercicio01.model.vo.Clientes;
@@ -64,7 +65,7 @@ public class Tela {
 		frmTelefonia.setFont(new Font("Arial Black", Font.PLAIN, 12));
 		frmTelefonia.setTitle("Telefonia");
 		frmTelefonia.setBounds(100, 100, 492, 534);
-		frmTelefonia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTelefonia.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		
 		// MENU

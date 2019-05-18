@@ -17,6 +17,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import crud.controller.UsuarioController;
 import crud.model.vo.NivelVO;
@@ -57,7 +58,7 @@ public class ExcluirUsuarioGUI {
 		frmExcluirUsuarios = new JFrame();
 		frmExcluirUsuarios.setTitle("Exclusao de Usuarios");
 		frmExcluirUsuarios.setBounds(100, 100, 393, 282);
-		frmExcluirUsuarios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmExcluirUsuarios.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frmExcluirUsuarios.getContentPane().setLayout(null);
 		
 		JLabel lblEmail = new JLabel("Email:");
