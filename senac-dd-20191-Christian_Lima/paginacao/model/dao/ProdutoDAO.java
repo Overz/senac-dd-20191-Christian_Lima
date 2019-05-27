@@ -164,8 +164,28 @@ public class ProdutoDAO {
 			e.printStackTrace();
 		}
 		return produtos;
-
 	}
+	
+	public ArrayList<Produto> listarQuantidade(ProdutoSeletor seletor) {
+		String sql = " SELECT * FROM PRODUTO ";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+
+		try {
+			ResultSet result = prepStmt.executeQuery();
+
+			while (result.next()) {
+				Produto p = construirProdutoDoResultSet(result);
+				produtos.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return produtos;
+	}
+	
 
 	/**
 	 * Cria os filtros de consulta (cláusulas WHERE/AND) de acordo com o que foi
@@ -307,5 +327,24 @@ public class ProdutoDAO {
 			e.printStackTrace();
 		}
 		return p;
+	}
+	
+	public int listarQuantidade() {
+		String sql = " SELECT count(*) FROM PRODUTO ";
+
+		Connection conexao = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conexao, sql);
+		int quantidadeProdutos = 0;
+
+		try {
+			ResultSet result = prepStmt.executeQuery();
+
+			while (result.next()) {
+				quantidadeProdutos = result.getInt(1);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return quantidadeProdutos;
 	}
 }

@@ -33,6 +33,7 @@ public class ExcluirUsuarioGUI {
 	private List<NivelVO> niveis;
 	private ArrayList<UsuarioVO> usuariosVO = new ArrayList<UsuarioVO>();
 	private JComboBox cbExcluirUsuarios;
+	private JButton btnExcluir;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -92,7 +93,7 @@ public class ExcluirUsuarioGUI {
 		frmExcluirUsuarios.getContentPane().add(pfConfirmacaoSenha);
 		consultarNiveis();
 		
-		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

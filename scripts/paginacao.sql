@@ -1,4 +1,5 @@
 CREATE SCHEMA `dbfoodtruck` ;
+USE  `dbfoodtruck`;
 
 CREATE TABLE `dbfoodtruck`.`sobremesa` (
   `id` INT NOT NULL,

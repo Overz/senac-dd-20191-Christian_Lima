@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -179,7 +180,7 @@ public class TelaListagemProdutos extends JFrame {
 
 
 		JButton btnConsultar = new JButton("Consultar");
-		btnConsultar.setBounds(160, 215, 150, 40);
+		btnConsultar.setBounds(151, 213, 150, 40);
 		contentPane.add(btnConsultar);
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -236,7 +237,10 @@ public class TelaListagemProdutos extends JFrame {
 		seletor.setDataFimCadastro(dtFimCadastro.getDate());
 
 		List<Produto> produtos = controlador.listarProdutos(seletor);
-		atualizarTotalPaginas(produtos.size());
+		int quantidadeProtudos = controlador.listarQuatidade();
+		atualizarTotalPaginas(quantidadeProtudos);
+		//int quantidadeProdutos = controlador.listarQuatidade();
+		//atualizarTotalPaginas(quantidadeProdutos);
 		atualizarTabelaProdutos(produtos);
 
 	}
@@ -255,8 +259,8 @@ public class TelaListagemProdutos extends JFrame {
 		produtosConsultados = produtos;
 
 		// TODO descomentar quando chegarmos em relatórios
-		// btnGerarXls.setEnabled(produtos != null && produtos.size() > 0);
-		// btnGerarPdf.setEnabled(produtos != null && produtos.size() > 0);
+		btnGerarXls.setEnabled(produtos != null && produtos.size() > 0);
+		btnGerarPdf.setEnabled(produtos != null && produtos.size() > 0);
 
 		// Limpa a tabela
 		tblProdutos.setModel(new DefaultTableModel(new String[][] { { "#", "Nome", "Marca", "Peso", "Dt. Cadastro" }, },

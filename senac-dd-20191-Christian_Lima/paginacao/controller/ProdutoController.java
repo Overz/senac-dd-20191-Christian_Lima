@@ -1,5 +1,6 @@
 package paginacao.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import paginacao.model.bo.ProdutoBO;
@@ -70,5 +71,9 @@ public class ProdutoController {
 
 	public List<Produto> listarProdutos(ProdutoSeletor seletor) {
 		return bo.listarProdutos(seletor);
+	}
+
+	public int listarQuatidade() {
+		return bo.listarQuantidade();
 	}
 }
